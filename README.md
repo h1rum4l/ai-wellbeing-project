@@ -3,7 +3,7 @@
 ### A Fuzzy Logic Approach to Real-Time Stress Classification and Adaptive Coping Recommendation
 
 **Application Architecture:** React 19 + TypeScript + Vite + Tailwind CSS  
-**Theme:** Liquid Glass (Dark Midnight Navy & Cyan)
+**Theme:** Liquid Glass 
 
 ---
 
