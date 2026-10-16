@@ -10,7 +10,7 @@ export function runFuzzyInference(
 ): InferenceResult {
   // 1. Clamp inputs to valid universe ranges with safe fallbacks
   const clamp = (val: number, min: number, max: number, fallback: number) => {
-    if (typeof val !== 'number' || Number.isNaN(val)) return fallback;
+    if (typeof val !== 'number' || !Number.isFinite(val)) return fallback;
     return Math.min(Math.max(val, min), max);
   };
   const hrvClamped = clamp(hrvVal, UNIVERSE_CONFIG.hrv.min, UNIVERSE_CONFIG.hrv.max, UNIVERSE_CONFIG.hrv.default);
