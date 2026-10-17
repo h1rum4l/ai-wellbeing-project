@@ -54,6 +54,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   promptReason,
 }) => {
   const [mode, setMode] = useState<'login' | 'register'>(initialMode);
+  const [busy, setBusy] = useState(false);
 
   // Sync mode with incoming initialMode when modal opens
   useEffect(() => {
@@ -107,7 +108,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     );
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     triggerHaptic('medium');
     setRegError('');
@@ -124,7 +125,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       return;
     }
 
-    const res = store.registerUser(regEmail, regName, regPassword);
+    if (busy) return;
+    setBusy(true);
+    const res = await store.signUp(regEmail, regName, regPassword);
+    setBusy(false);
     if (res.ok && res.user) {
       triggerHaptic('levelUp');
       setRegSuccess(true);
@@ -139,31 +143,37 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     triggerHaptic('medium');
     setLoginError('');
-    const user = store.authenticateUser(loginEmail, loginPassword);
+    if (busy) return;
+    setBusy(true);
+    const { user, error } = await store.signIn(loginEmail, loginPassword);
+    setBusy(false);
     if (user) {
       triggerHaptic('success');
       onUserChanged(user);
       onClose();
     } else {
       triggerHaptic('warning');
-      setLoginError('Email or password was not recognized. Please check your credentials or use the 1-Tap Demo Login.');
+      setLoginError(error || 'Email or password was not recognized. Please check your credentials or use the 1-Tap Demo Login.');
     }
   };
 
-  const handleQuickDemoLogin = (email = 'maya@example.com', pwd = 'password123') => {
+  const handleQuickDemoLogin = async (email = 'maya@example.com', pwd = 'password123') => {
     triggerHaptic('success');
     setLoginError('');
-    const user = store.authenticateUser(email, pwd);
+    if (busy) return;
+    setBusy(true);
+    const { user } = await store.signIn(email, pwd);
+    setBusy(false);
     if (user) {
       onUserChanged(user);
       onClose();
     } else {
       // Fallback register
-      const res = store.registerUser(email, 'Maya Lin', pwd);
+      const res = await store.signUp(email, 'Maya Lin', pwd);
       if (res.user) {
         onUserChanged(res.user);
         onClose();

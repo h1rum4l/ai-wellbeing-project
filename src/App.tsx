@@ -78,8 +78,20 @@ export const App: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
+  // Bumped whenever server data is pulled in, so tabs re-read their (now fresh) records
+  const [dataVersion, setDataVersion] = useState(0);
+
   useEffect(() => {
-    setCurrentUser(store.getCurrentUser());
+    setCurrentUser(store.getCurrentUser()); // instant, from the on-device copy
+    let cancelled = false;
+    store.restoreSession().then((user) => {
+      if (cancelled) return;
+      setCurrentUser(user);
+      setDataVersion((v) => v + 1);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Close dropdowns on outside click
@@ -147,6 +159,7 @@ export const App: React.FC = () => {
         onClose={() => setAuthModalOpen(false)}
         onUserChanged={(user) => {
           setCurrentUser(user);
+          setDataVersion((v) => v + 1);
           if (user) {
             showToast(`Welcome, ${user.display_name}!`);
             companionVoice.speak(`Welcome to your sanctuary, ${user.display_name}!`);
@@ -346,7 +359,7 @@ export const App: React.FC = () => {
                       type="button"
                       onClick={() => {
                         triggerHaptic('light');
-                        store.setCurrentUser(null);
+                        void store.signOut();
                         setCurrentUser(null);
                         setProfileDropdownOpen(false);
                         showToast('Logged out');
@@ -391,7 +404,7 @@ export const App: React.FC = () => {
                     type="button"
                     onClick={() => {
                       triggerHaptic('light');
-                      store.setCurrentUser(null);
+                      void store.signOut();
                       setCurrentUser(null);
                       setMobileMenuOpen(false);
                       showToast('Logged out');
@@ -487,7 +500,7 @@ export const App: React.FC = () => {
       </header>
 
       {/* Main Content Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
+      <main key={dataVersion} className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
         {/* 1. Home View (Central Hero Section with Zen Panda & Side Panels) */}
         {activeTab === 'home' && (
           <HomeView
@@ -636,7 +649,7 @@ export const App: React.FC = () => {
         {/* Submenu Tool: Account & Security */}
         {activeTab === 'account' && (
           <div className="animate-fade-in">
-            <AccountTab currentUser={currentUser} onUserChanged={(u) => setCurrentUser(u)} />
+            <AccountTab currentUser={currentUser} onUserChanged={(u) => { setCurrentUser(u); setDataVersion((v) => v + 1); }} />
           </div>
         )}
       </main>

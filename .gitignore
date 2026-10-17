@@ -34,3 +34,5 @@ data/*.sqlite3
 data/*.db
 data/*.sqlite*
 
+.jwt_secret
+data/.jwt_secret

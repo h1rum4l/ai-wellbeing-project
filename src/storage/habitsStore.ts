@@ -1,4 +1,5 @@
 import { DailyQuestLog, StressHabit, UserHabitProfile } from '../types';
+import { queueOp } from './api';
 
 const HABITS_PROFILE_KEY = 'stressina_habit_profile_';
 const GUEST_KEY = 'guest';
@@ -210,9 +211,23 @@ export const habitsStore = {
       profile.level = levelInfo.level;
       profile.levelTitle = levelInfo.title;
       safeSetItem(key, JSON.stringify(profile));
+      // Mirror signed-in users' progress to the backend (guests stay local until they sign up)
+      if (userId) {
+        queueOp({ userId, key: 'habits', method: 'PUT', path: '/habits/profile', body: { profile } });
+      }
     } catch (err) {
       console.error('Failed to save habit profile:', err);
     }
+  },
+
+  /** Replace the local copy with the server's version (does not sync back). */
+  setProfileFromServer(userId: string, profile: UserHabitProfile): void {
+    safeSetItem(this.getProfileKey(userId), JSON.stringify(profile));
+  },
+
+  /** Remove a user's cached progress from this device (used on sign-out of a server account). */
+  clearLocalProfile(userId: string): void {
+    safeRemoveItem(this.getProfileKey(userId));
   },
 
   // Migrate guest data into newly registered or signed-in user

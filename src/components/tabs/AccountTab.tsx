@@ -67,21 +67,21 @@ export const AccountTab: React.FC<AccountTabProps> = ({ currentUser, onUserChang
     }
   }, [currentUser]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     triggerHaptic('medium');
     setLoginError('');
-    const user = store.authenticateUser(loginEmail, loginPassword);
+    const { user, error } = await store.signIn(loginEmail, loginPassword);
     if (user) {
       triggerHaptic('success');
       onUserChanged(user);
     } else {
       triggerHaptic('warning');
-      setLoginError('Email or password was not recognized. Please check your credentials or register first.');
+      setLoginError(error || 'Email or password was not recognized. Please check your credentials or register first.');
     }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     triggerHaptic('medium');
     setRegError('');
@@ -93,7 +93,7 @@ export const AccountTab: React.FC<AccountTabProps> = ({ currentUser, onUserChang
       return;
     }
 
-    const res = store.registerUser(regEmail, regName, regPassword);
+    const res = await store.signUp(regEmail, regName, regPassword);
     if (res.ok && res.user) {
       triggerHaptic('levelUp');
       setRegSuccess(res.message);
@@ -145,16 +145,22 @@ export const AccountTab: React.FC<AccountTabProps> = ({ currentUser, onUserChang
     URL.revokeObjectURL(url);
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     if (!currentUser || !confirmDelete) return;
     triggerHaptic('heavy');
-    store.deleteAccount(currentUser.id);
-    onUserChanged(null);
+    try {
+      await store.deleteAccount(currentUser.id);
+      onUserChanged(null);
+    } catch {
+      triggerHaptic('warning');
+      setPrefsMessage('Could not reach the server to delete your account. Please check your connection and try again.');
+      setTimeout(() => setPrefsMessage(''), 5000);
+    }
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     triggerHaptic('light');
-    store.setCurrentUser(null);
+    await store.signOut();
     onUserChanged(null);
   };
 
@@ -477,9 +483,9 @@ export const AccountTab: React.FC<AccountTabProps> = ({ currentUser, onUserChang
             </div>
             <button
               type="button"
-              onClick={() => {
+              onClick={async () => {
                 triggerHaptic('success');
-                const user = store.authenticateUser('maya@example.com', 'password123');
+                const { user } = await store.signIn('maya@example.com', 'password123');
                 if (user) onUserChanged(user);
               }}
               className="px-3.5 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 active:scale-95 text-white text-xs font-extrabold transition-all shadow-xs shrink-0 cursor-pointer"
