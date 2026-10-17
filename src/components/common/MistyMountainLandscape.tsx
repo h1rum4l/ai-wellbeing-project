@@ -28,13 +28,13 @@ export const MistyMountainLandscape: React.FC = () => {
       {/* 5. Subtle Lake Mist rising off the water */}
       <div className="absolute bottom-[18vh] left-0 right-0 h-28 bg-gradient-to-t from-white/35 via-white/15 to-transparent blur-xl pointer-events-none" />
 
-      {/* 6. Floating Translucent Eucalyptus & Bamboo Leaves */}
+      {/* 6. Floating Translucent Sage & Mint Botanical Leaves */}
       <div className="absolute top-[28%] left-[8%] opacity-60 animate-gentle-float">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path
             d="M4 18 C 6 10, 16 6, 20 4 C 18 14, 12 18, 4 18 Z"
-            fill="#A9DFBF"
-            stroke="#52BE80"
+            fill="#A9C9BB"
+            stroke="#538A78"
             strokeWidth="0.8"
           />
         </svg>
@@ -47,8 +47,8 @@ export const MistyMountainLandscape: React.FC = () => {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path
             d="M4 18 C 6 10, 16 6, 20 4 C 18 14, 12 18, 4 18 Z"
-            fill="#D1EA27"
-            stroke="#84CC16"
+            fill="#B9DCE1"
+            stroke="#538A78"
             strokeWidth="0.8"
           />
         </svg>
@@ -61,8 +61,8 @@ export const MistyMountainLandscape: React.FC = () => {
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path
             d="M4 18 C 6 10, 16 6, 20 4 C 18 14, 12 18, 4 18 Z"
-            fill="#A9DFBF"
-            stroke="#52BE80"
+            fill="#D9E9DF"
+            stroke="#538A78"
             strokeWidth="0.8"
           />
         </svg>
@@ -75,8 +75,8 @@ export const MistyMountainLandscape: React.FC = () => {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <path
             d="M4 18 C 6 10, 16 6, 20 4 C 18 14, 12 18, 4 18 Z"
-            fill="#D5F5E3"
-            stroke="#52BE80"
+            fill="#A9C9BB"
+            stroke="#538A78"
             strokeWidth="0.6"
           />
         </svg>

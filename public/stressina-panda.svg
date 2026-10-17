@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Ambient Radial Halo -->
+    <radialGradient id="pandaAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#A9C9BB" stop-opacity="0.55" />
+      <stop offset="50%" stop-color="#D9E9DF" stop-opacity="0.3" />
+      <stop offset="85%" stop-color="#B9DCE1" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#B9DCE1" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Warm White Panda Fur with Soft 3D Lighting -->
+    <linearGradient id="furWhite" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#F5F7F2" />
+      <stop offset="100%" stop-color="#E2E7DE" />
+    </linearGradient>
+
+    <!-- Charcoal Panda Fur with Volumetric Depth -->
+    <linearGradient id="furCharcoal" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#414F4C" />
+      <stop offset="45%" stop-color="#2D3835" />
+      <stop offset="100%" stop-color="#1B2422" />
+    </linearGradient>
+
+    <!-- Inner Ear Soft Tint -->
+    <linearGradient id="innerEar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#212C29" />
+      <stop offset="100%" stop-color="#161E1C" />
+    </linearGradient>
+
+    <!-- Sage & Mint Lotus Petal Gradient -->
+    <linearGradient id="lotusPetal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="40%" stop-color="#D9E9DF" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#A9C9BB" stop-opacity="0.85" />
+    </linearGradient>
+
+    <!-- Glass Pedestal Gradient -->
+    <linearGradient id="glassPedestal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.7)" />
+      <stop offset="50%" stop-color="rgba(217,233,223,0.5)" />
+      <stop offset="100%" stop-color="rgba(169,201,187,0.6)" />
+    </linearGradient>
+
+    <!-- Collar Mint Gradient -->
+    <linearGradient id="collarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A9C9BB" />
+      <stop offset="50%" stop-color="#D9E9DF" />
+      <stop offset="100%" stop-color="#A9C9BB" />
+    </linearGradient>
+
+    <!-- Locket Heart Glow -->
+    <radialGradient id="locketGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F0FDFC" />
+      <stop offset="55%" stop-color="#A9C9BB" />
+      <stop offset="100%" stop-color="#3B7A68" />
+    </radialGradient>
+
+    <!-- Shadow Filter -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#14532D" flood-opacity="0.15" />
+    </filter>
+
+    <filter id="auraBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" />
+    </filter>
+  </defs>
+
+  <!-- 1. Ambient Background Halo Aura -->
+  <circle cx="200" cy="200" r="175" fill="url(#pandaAura)" filter="url(#auraBlur)" />
+
+  <!-- 2. Sacred Frosted Glass Lotus Platform -->
+  <g id="lotus-platform" filter="url(#softShadow)">
+    <!-- Base Rippling Water / Energy Rings -->
+    <ellipse cx="200" cy="350" rx="140" ry="24" fill="rgba(169,201,187,0.2)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" />
+    <ellipse cx="200" cy="346" rx="115" ry="18" fill="rgba(217,233,223,0.3)" stroke="rgba(255,255,255,0.8)" stroke-width="1.2" />
+
+    <!-- Blooming Outer Lotus Petals -->
+    <path d="M 160 325 C 115 305, 80 270, 85 235 C 120 248, 160 290, 172 320 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.5" />
+    <path d="M 240 325 C 285 305, 320 270, 315 235 C 280 248, 240 290, 228 320 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.5" />
+
+    <path d="M 125 336 C 85 320, 50 295, 52 268 C 84 276, 122 312, 136 332 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.2" opacity="0.85" />
+    <path d="M 275 336 C 315 320, 350 295, 348 268 C 316 276, 278 312, 264 332 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.2" opacity="0.85" />
+
+    <!-- Center Blooming Petals -->
+    <path d="M 185 315 C 178 265, 188 220, 200 205 C 212 220, 222 265, 215 315 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" />
+
+    <!-- Front Guard Petals -->
+    <path d="M 150 338 C 170 348, 190 350, 200 350 C 210 350, 230 348, 250 338 C 235 326, 215 322, 200 322 C 185 322, 165 326, 150 338 Z" fill="url(#lotusPetal)" stroke="#FFFFFF" stroke-width="1.5" />
+  </g>
+
+  <!-- 3. Stressina Panda Body (Meditative Zen Lotus Sitting Pose) -->
+  <g id="panda-mascot" filter="url(#softShadow)">
+    
+    <!-- Folded Legs in Lotus Pose (Charcoal Fur) -->
+    <path d="M 115 270 C 105 315, 140 335, 200 335 C 260 335, 295 315, 285 270 C 270 320, 130 320, 115 270 Z" fill="url(#furCharcoal)" />
+    
+    <!-- Soft Rounded Soles / Paws Turned Slightly Upward -->
+    <ellipse cx="132" cy="295" rx="22" ry="15" fill="#212C29" transform="rotate(-15 132 295)" />
+    <ellipse cx="132" cy="295" rx="12" ry="8" fill="rgba(169,201,187,0.35)" transform="rotate(-15 132 295)" />
+    
+    <ellipse cx="268" cy="295" rx="22" ry="15" fill="#212C29" transform="rotate(15 268 295)" />
+    <ellipse cx="268" cy="295" rx="12" ry="8" fill="rgba(169,201,187,0.35)" transform="rotate(15 268 295)" />
+
+    <!-- Panda Torso (Warm White Fur with 3D Depth) -->
+    <ellipse cx="200" cy="245" rx="85" ry="74" fill="url(#furWhite)" />
+    <!-- Tummy Specular Highlight -->
+    <ellipse cx="200" cy="242" rx="55" ry="46" fill="#FFFFFF" opacity="0.85" />
+
+    <!-- Panda Arms Resting Gently in Meditative Mudra on Lap -->
+    <!-- Left Arm -->
+    <path d="M 135 220 C 115 235, 120 275, 165 278" stroke="url(#furCharcoal)" stroke-width="28" stroke-linecap="round" />
+    <!-- Right Arm -->
+    <path d="M 265 220 C 285 235, 280 275, 235 278" stroke="url(#furCharcoal)" stroke-width="28" stroke-linecap="round" />
+
+    <!-- Paws meeting in serene mindfulness mudra -->
+    <ellipse cx="178" cy="272" rx="16" ry="12" fill="url(#furCharcoal)" transform="rotate(-10 178 272)" />
+    <ellipse cx="222" cy="272" rx="16" ry="12" fill="url(#furCharcoal)" transform="rotate(10 222 272)" />
+
+    <!-- 4. Official Sage Collar & Glowing Heart-Leaf Emblem -->
+    <g id="collar-emblem">
+      <!-- Mint Collar Ribbon -->
+      <path d="M 148 195 C 165 210, 235 210, 252 195 C 242 215, 158 215, 148 195 Z" fill="url(#collarGrad)" stroke="#3B7A68" stroke-width="1.5" />
+      
+      <!-- Glowing Heart Locket -->
+      <g transform="translate(200, 212)">
+        <circle cx="0" cy="0" r="16" fill="rgba(169,201,187,0.5)" filter="url(#auraBlur)" />
+        <path d="M 0 10 C -12 2, -14 -9, -6 -13 C -1 -14, 0 -8, 0 -8 C 0 -8, 1 -14, 6 -13 C 14 -9, 12 2, 0 10 Z" fill="url(#locketGlow)" stroke="#FFFFFF" stroke-width="2" />
+        <!-- Leaf Vein Emboss inside Heart -->
+        <path d="M 0 4 C -5 0, -5 -6, 0 -10 C 5 -6, 5 0, 0 4 Z" fill="#FFFFFF" opacity="0.95" />
+        <line x1="0" y1="4" x2="0" y2="-9" stroke="#3B7A68" stroke-width="1" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- 5. Head & Facial Features -->
+    <g id="panda-head">
+      <!-- Charcoal Ears with Soft Interior Depth -->
+      <!-- Left Ear -->
+      <ellipse cx="135" cy="115" rx="34" ry="32" fill="url(#furCharcoal)" transform="rotate(-18 135 115)" />
+      <ellipse cx="135" cy="115" rx="20" ry="18" fill="url(#innerEar)" transform="rotate(-18 135 115)" />
+      <!-- Right Ear -->
+      <ellipse cx="265" cy="115" rx="34" ry="32" fill="url(#furCharcoal)" transform="rotate(18 265 115)" />
+      <ellipse cx="265" cy="115" rx="20" ry="18" fill="url(#innerEar)" transform="rotate(18 265 115)" />
+
+      <!-- Big Fluffy Head Contour -->
+      <ellipse cx="200" cy="155" rx="84" ry="74" fill="url(#furWhite)" />
+      <!-- Head 3D Specular Highlight (Soft forehead gloss) -->
+      <ellipse cx="200" cy="140" rx="55" ry="42" fill="#FFFFFF" opacity="0.8" />
+
+      <!-- Characteristic Charcoal Eye Patches (Distinct Panda Markings) -->
+      <!-- Left Eye Patch -->
+      <ellipse cx="162" cy="152" rx="27" ry="30" fill="url(#furCharcoal)" transform="rotate(-14 162 152)" />
+      <!-- Right Eye Patch -->
+      <ellipse cx="238" cy="152" rx="27" ry="30" fill="url(#furCharcoal)" transform="rotate(14 238 152)" />
+
+      <!-- Warm, Friendly, Expressive Eyes with Disney/Pixar Gloss Catchlights -->
+      <!-- Left Eye -->
+      <circle cx="164" cy="150" r="11" fill="#141B19" />
+      <circle cx="161" cy="146" r="4.2" fill="#FFFFFF" />
+      <circle cx="167" cy="152" r="1.8" fill="#FFFFFF" />
+      <!-- Calm Warm Eyelash Arc -->
+      <path d="M 152 148 Q 164 138 176 148" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.4" />
+
+      <!-- Right Eye -->
+      <circle cx="236" cy="150" r="11" fill="#141B19" />
+      <circle cx="233" cy="146" r="4.2" fill="#FFFFFF" />
+      <circle cx="239" cy="152" r="1.8" fill="#FFFFFF" />
+      <path d="M 224 148 Q 236 138 248 148" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.4" />
+
+      <!-- Soft Peach Blush on Cheeks (Warm, Cute & Friendly) -->
+      <ellipse cx="140" cy="172" rx="14" ry="8" fill="#FCA5A5" opacity="0.65" />
+      <ellipse cx="260" cy="172" rx="14" ry="8" fill="#FCA5A5" opacity="0.65" />
+
+      <!-- Cute Soft Heart-Shaped Panda Nose -->
+      <path d="M 193 167 C 193 162, 207 162, 207 167 C 207 173, 200 178, 200 178 C 200 178, 193 173, 193 167 Z" fill="#1E2825" />
+      <ellipse cx="198" cy="165" rx="3" ry="1.5" fill="#FFFFFF" opacity="0.6" />
+
+      <!-- Reassuring, Gentle Smile (Cat-curve) -->
+      <path d="M 188 178 Q 195 185 200 180 Q 205 185 212 178" stroke="#2D3835" stroke-width="2.6" stroke-linecap="round" fill="none" />
+    </g>
+
+    <!-- Floating Zen Sparkles around Stressina -->
+    <g id="sparkles">
+      <path d="M 100 160 Q 106 160 106 154 Q 106 160 112 160 Q 106 160 106 166 Q 106 160 100 160 Z" fill="#34D399" opacity="0.75" />
+      <path d="M 295 140 Q 302 140 302 133 Q 302 140 309 140 Q 302 140 302 147 Q 302 140 295 140 Z" fill="#6EE7B7" opacity="0.8" />
+      <path d="M 285 250 Q 290 250 290 245 Q 290 250 295 250 Q 290 250 290 255 Q 290 250 285 250 Z" fill="#A7F3D0" opacity="0.7" />
+      <circle cx="115" cy="220" r="3" fill="#D1FAE5" opacity="0.8" />
+      <circle cx="280" cy="190" r="2.5" fill="#ECFDF5" opacity="0.7" />
+    </g>
+  </g>
+</svg>

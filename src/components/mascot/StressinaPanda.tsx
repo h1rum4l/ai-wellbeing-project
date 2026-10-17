@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { store } from '../../storage/store';
 
 export type StressinaPose =
   | 'idle_float'
@@ -25,7 +26,8 @@ export type StressinaExpression =
   | 'blushing'
   // Legacy alias compatibility
   | 'listening'
-  | 'empathetic';
+  | 'empathetic'
+  | 'celebration';
 
 interface StressinaPandaProps {
   pose?: StressinaPose;
@@ -54,6 +56,17 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
   isSpeaking = false,
   lookAtPointer = true,
 }) => {
+  // Custom user-uploaded mascot image support
+  const [customPandaUrl, setCustomPandaUrl] = useState<string | null>(() => store.getCustomPandaImage());
+
+  useEffect(() => {
+    const handleCustomPandaUpdate = () => {
+      setCustomPandaUrl(store.getCustomPandaImage());
+    };
+    window.addEventListener('stressina_panda_image_updated', handleCustomPandaUpdate);
+    return () => window.removeEventListener('stressina_panda_image_updated', handleCustomPandaUpdate);
+  }, []);
+
   // Eye tracking offsets relative to center
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 });
   const [isBlinking, setIsBlinking] = useState(false);
@@ -70,7 +83,7 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
       : pose;
 
   // Derive default expression based on pose if not explicitly specified
-  const activeExp: StressinaExpression =
+  const rawExp: StressinaExpression =
     expression ||
     (normalizedPose === 'relaxing' || normalizedPose === 'sitting'
       ? 'calm'
@@ -80,21 +93,24 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
       ? 'happy'
       : 'calm');
 
-  // Determine pixel size
+  const activeExp: StressinaExpression =
+    rawExp === 'celebration' ? 'excited' : rawExp;
+
+  // Determine pixel size tailored for mobile and desktop viewports
   const sizeMap = {
-    xs: 40,
-    sm: 64,
-    md: 110,
-    lg: 180,
-    xl: 260,
-    hero: 320,
+    xs: 36,
+    sm: 52,
+    md: 88,
+    lg: 136,
+    xl: 180,
+    hero: 220,
   };
 
   const dim = sizeMap[size] || sizeMap.md;
 
   // Occasional natural blinking
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const scheduleBlink = () => {
       const delay = 3500 + Math.random() * 3500;
       timeoutId = setTimeout(() => {
@@ -148,12 +164,17 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
     <div
       ref={containerRef}
       onClick={onClick}
-      className={`relative inline-flex flex-col items-center justify-center select-none ${
+      className={`relative inline-flex flex-col items-center justify-center select-none max-w-full ${
         interactive
           ? 'cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95'
           : ''
       } ${className}`}
-      style={{ width: dim, height: dim + (caption ? 24 : 0) }}
+      style={{
+        width: dim,
+        maxWidth: '100%',
+        height: dim + (caption ? 24 : 0),
+        maxHeight: '100%',
+      }}
     >
       {/* Ambient Liquid Glass Aura / Glow */}
       {showAura && (
@@ -172,14 +193,33 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
         />
       )}
 
-      {/* SVG Character Canvas */}
-      <svg
-        viewBox="0 0 300 300"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full relative z-10 drop-shadow-[0_8px_24px_rgba(46,58,55,0.12)]"
-        style={{ overflow: 'visible' }}
-      >
+      {/* High-Resolution Stressina Panda Mascot Artwork */}
+      {customPandaUrl ? (
+        <div
+          className={`relative z-10 w-full h-full flex items-center justify-center p-0.5 overflow-hidden rounded-full ${
+            normalizedPose === 'jumping' ? 'animate-bounce' : normalizedPose === 'waving' ? 'animate-pulse' : ''
+          }`}
+        >
+          <img
+            src={customPandaUrl}
+            alt="Stressina Mascot"
+            className="w-full h-full object-contain select-none drop-shadow-md rounded-2xl"
+            referrerPolicy="no-referrer"
+            onError={() => {
+              store.setCustomPandaImage(null);
+              setCustomPandaUrl(null);
+            }}
+          />
+        </div>
+      ) : (
+        /* Rich Interactive SVG Character Canvas (100% vector, zero network latency, always renders) */
+        <svg
+          viewBox="0 0 300 300"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full relative z-10 drop-shadow-[0_8px_24px_rgba(46,58,55,0.12)]"
+          style={{ overflow: 'visible' }}
+        >
         <defs>
           {/* Official Warm White Panda Fur */}
           <linearGradient id="pandaWarmWhiteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -223,8 +263,8 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
           </filter>
         </defs>
 
-        {/* -------------------- 1. PLATFORM / LOTUS (for Idle & Relaxing Poses) -------------------- */}
-        {showLotusPlatform && (normalizedPose === 'idle_float' || normalizedPose === 'relaxing' || normalizedPose === 'sitting') && (
+        {/* -------------------- 1. PLATFORM / LOTUS (for Idle, Relaxing & Waving Poses) -------------------- */}
+        {showLotusPlatform && (normalizedPose === 'idle_float' || normalizedPose === 'relaxing' || normalizedPose === 'sitting' || normalizedPose === 'waving') && (
           <g id="lotus-platform">
             {/* Soft Ambient Blooming Petals */}
             <g id="lotus-back-petals" opacity="0.85">
@@ -614,6 +654,7 @@ export const StressinaPanda: React.FC<StressinaPandaProps> = ({
           )}
         </g>
       </svg>
+      )}
 
       {/* Optional Caption */}
       {caption && (

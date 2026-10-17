@@ -107,11 +107,12 @@ class CompanionVoiceEngine {
 
     try {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.pitch = 1.12;
-      utterance.rate = 0.94;
-      utterance.volume = 0.9;
+      // Cute, friendly, sweet vocal tone matching Stressina character reference sheet
+      utterance.pitch = 1.34;
+      utterance.rate = 1.02;
+      utterance.volume = 0.95;
 
-      // Select warm, friendly voice if available
+      // Select cute, friendly, warm voice if available across platforms
       const voices = window.speechSynthesis.getVoices();
       const preferred = voices.find(
         (v) =>
@@ -119,9 +120,11 @@ class CompanionVoiceEngine {
           (v.name.includes('Samantha') ||
             v.name.includes('Karen') ||
             v.name.includes('Victoria') ||
-            v.name.includes('Female') ||
             v.name.includes('Google UK English Female') ||
-            v.name.includes('Natural'))
+            v.name.includes('Microsoft Jenny') ||
+            v.name.includes('Microsoft Zira') ||
+            v.name.includes('Natural') ||
+            v.name.includes('Female'))
       );
       if (preferred) {
         utterance.voice = preferred;

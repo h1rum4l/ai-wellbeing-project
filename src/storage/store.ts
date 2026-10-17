@@ -16,6 +16,7 @@ const CONVERSATIONS_KEY = 'ai_wellbeing_conversations';
 const GAMES_KEY = 'ai_wellbeing_games';
 const COUNSELLOR_KEY = 'ai_wellbeing_counsellor_requests';
 const PREFS_KEY = 'ai_wellbeing_prefs';
+const CUSTOM_PANDA_KEY = 'ai_wellbeing_custom_panda_image';
 
 const memStorage = new Map<string, string>();
 
@@ -119,7 +120,7 @@ export const store = {
     if (user) {
       save(CURRENT_USER_KEY, user);
     } else {
-      localStorage.removeItem(CURRENT_USER_KEY);
+      safeRemoveItem(CURRENT_USER_KEY);
     }
   },
 
@@ -445,6 +446,20 @@ export const store = {
     const current = this.getCurrentUser();
     if (current && current.id === userId) {
       this.setCurrentUser(null);
+    }
+  },
+
+  getCustomPandaImage(): string | null {
+    const val = safeGetItem(CUSTOM_PANDA_KEY);
+    if (!val || val === 'null' || val === 'undefined' || val.trim() === '') return null;
+    return val;
+  },
+
+  setCustomPandaImage(dataUrl: string | null): void {
+    if (dataUrl && dataUrl !== 'null' && dataUrl !== 'undefined' && dataUrl.trim() !== '') {
+      safeSetItem(CUSTOM_PANDA_KEY, dataUrl);
+    } else {
+      safeRemoveItem(CUSTOM_PANDA_KEY);
     }
   },
 };

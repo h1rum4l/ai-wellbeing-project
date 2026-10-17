@@ -138,7 +138,8 @@ export const StressCrushGame: React.FC<StressCrushGameProps> = ({
   const [score, setScore] = useState<number>(0);
   const [highScore, setHighScore] = useState<number>(() => {
     try {
-      return parseInt(localStorage.getItem('stressina_crush_highscore') || '0', 10);
+      const saved = parseInt(localStorage.getItem('stressina_crush_highscore') || '0', 10);
+      return Number.isFinite(saved) ? saved : 0;
     } catch {
       return 0;
     }

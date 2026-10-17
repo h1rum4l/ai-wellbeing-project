@@ -5,18 +5,21 @@ import { detectCrisis, crisisMessage } from '../chat/safety';
 import { ChatMessage } from '../types';
 import { StressinaLogo } from './common/StressinaLogo';
 import { StressinaPanda } from './mascot/StressinaPanda';
+import { FuturisticGreenButton } from './common/FuturisticGreenButton';
 import { triggerHaptic } from '../utils/haptics';
 
 interface FloatingChatProps {
   onNavigateToTab?: (tab: string) => void;
   isOpenControlled?: boolean;
   onToggleOpen?: (open: boolean) => void;
+  showLauncher?: boolean;
 }
 
 export const FloatingChat: React.FC<FloatingChatProps> = ({
   onNavigateToTab,
   isOpenControlled,
   onToggleOpen,
+  showLauncher = true,
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const isChatOpen = isOpenControlled !== undefined ? isOpenControlled : internalOpen;
@@ -87,31 +90,33 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
       )}
 
       {/* Floating Widget Container */}
-      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[80] pointer-events-none">
-        {/* Floating Launcher Button with Mascot */}
-        {!isChatOpen && (
-          <button
-            type="button"
-            onClick={() => setChatOpen(true)}
-            aria-label="Open stressina.AI Companion"
-            className="pointer-events-auto liquid-button-primary rounded-full pl-3 pr-4 py-2.5 shadow-lg flex items-center gap-2.5 font-bold text-xs border border-white/80 transition-all hover:scale-105 active:scale-95 cursor-pointer group"
-          >
-            <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shrink-0 shadow-xs overflow-hidden">
-              <StressinaPanda
-                pose="safe_space"
-                expression="empathetic"
-                size="xs"
-                showLotusPlatform={false}
-                showAura={false}
-              />
-            </div>
-            <span className="tracking-wide text-white font-semibold">
-              <span className="inline sm:hidden">Chat with Stressina</span>
-              <span className="hidden sm:inline">Stressina Companion</span>
-            </span>
-          </button>
-        )}
-      </div>
+      {showLauncher && (
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[80] pointer-events-none">
+          {/* Floating Launcher Button with Mascot */}
+          {!isChatOpen && (
+            <FuturisticGreenButton
+              variant="prominent"
+              onClick={() => setChatOpen(true)}
+              ariaLabel="Open Stressina Companion"
+              className="pointer-events-auto pl-2.5 pr-4 py-2 sm:py-2.5 shadow-2xl"
+            >
+              <div className="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center shrink-0 shadow-xs overflow-hidden border border-white">
+                <StressinaPanda
+                  pose="safe_space"
+                  expression="empathetic"
+                  size="xs"
+                  showLotusPlatform={false}
+                  showAura={false}
+                />
+              </div>
+              <span className="tracking-wide text-white font-extrabold text-xs sm:text-sm drop-shadow-xs">
+                <span className="inline sm:hidden">Chat with Stressina</span>
+                <span className="hidden sm:inline">Stressina Companion</span>
+              </span>
+            </FuturisticGreenButton>
+          )}
+        </div>
+      )}
 
       {/* Responsive Floating Popup Window */}
       {isChatOpen && (

@@ -20,6 +20,7 @@ import {
 import { UserAccount } from '../../types';
 import { store } from '../../storage/store';
 import { StressinaPanda } from '../mascot/StressinaPanda';
+import { FuturisticGreenButton } from '../common/FuturisticGreenButton';
 import { triggerHaptic } from '../../utils/haptics';
 
 interface AuthModalProps {
@@ -172,9 +173,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg liquid-glass-hero bg-white/94 backdrop-blur-2xl rounded-[2.25rem] p-6 sm:p-8 overflow-hidden shadow-2xl border-2 border-white max-h-[92vh] overflow-y-auto text-slate-800">
+      <div className="relative w-full max-w-lg uiverse-green-card bg-white/88 backdrop-blur-xl rounded-[2.25rem] p-6 sm:p-8 overflow-hidden shadow-2xl border-2 border-emerald-300/70 max-h-[92vh] overflow-y-auto text-slate-800">
         
-        {/* Soft Ambient Sunlight & Eucalyptus Halos */}
+        {/* Animated Green Blob from Uiverse.io dylanharriscameron */}
+        <div className="uiverse-blob-green absolute pointer-events-none" />
+        
+        {/* Soft Ambient Halos */}
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-emerald-200/40 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-teal-100/35 rounded-full blur-3xl pointer-events-none" />
 
@@ -347,13 +351,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 />
               </div>
 
-              <button
+              <FuturisticGreenButton
                 type="submit"
-                className="w-full py-3.5 rounded-full text-xs font-extrabold tracking-wider uppercase cursor-pointer liquid-button-sage shadow-md flex items-center justify-center gap-2 mt-2"
+                variant="prominent"
+                className="w-full py-3.5 mt-2 shadow-lg"
               >
                 <Lock className="w-4 h-4 text-white" />
                 <span>Sign In to Sanctuary</span>
-              </button>
+              </FuturisticGreenButton>
 
               <div className="pt-2 text-center">
                 <button
@@ -574,14 +579,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               )}
             </div>
 
-            {/* Tactile Submit Button */}
-            <button
+            {/* Tactile Futuristic Green Submit Button */}
+            <FuturisticGreenButton
               type="submit"
-              className="w-full py-3.5 px-4 rounded-full text-xs font-extrabold tracking-wider uppercase cursor-pointer liquid-button-sage shadow-md flex items-center justify-center gap-2 mt-2"
+              variant="prominent"
+              className="w-full py-3.5 px-4 mt-2 shadow-lg"
             >
               <Award className="w-4 h-4 text-white" />
               <span>Create Profile & Claim 50 Marks</span>
-            </button>
+            </FuturisticGreenButton>
           </form>
         )}
 

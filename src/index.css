@@ -40,69 +40,106 @@
   background: rgba(83, 138, 120, 0.7);
 }
 
+/* Positioning lives in the components layer so Tailwind utilities (fixed / absolute / sticky)
+   can override it. Unlayered `position: relative` used to beat them and broke popovers,
+   toasts and the floating chat window. */
+@layer components {
+  .liquid-glass,
+  .liquid-glass-card,
+  .liquid-glass-hero {
+    position: relative;
+  }
+}
+
 /* 
   OFFICIAL SAGE & MISTY-BLUE TRANSLUCENT LIQUID GLASSMORPISM
   Soft frosted glass effect in warm whites, misty-blue, and soft mint
   with curved edges, blur backdrops, specular rims, and delicate shadow depth.
 */
 .liquid-glass {
-  background: rgba(240, 242, 235, 0.82);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.65);
   border-radius: 28px;
   color: #23322E;
   box-shadow: 
-    0 20px 48px -12px rgba(46, 58, 55, 0.1),
-    0 4px 16px -2px rgba(185, 220, 225, 0.25),
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.98),
+    0 20px 48px -12px rgba(20, 83, 45, 0.1),
+    0 0 20px rgba(34, 197, 94, 0.08),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95),
     inset 0 -1px 2px 0 rgba(217, 233, 223, 0.4);
 }
 
 .liquid-glass-card {
-  background: rgba(240, 242, 235, 0.86);
-  backdrop-filter: blur(26px) saturate(160%);
-  -webkit-backdrop-filter: blur(26px) saturate(160%);
-  border: 1.5px solid rgba(255, 255, 255, 0.96);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.7);
   border-radius: 28px;
   color: #23322E;
   box-shadow: 
-    0 24px 52px -12px rgba(46, 58, 55, 0.1),
-    0 4px 16px -2px rgba(185, 220, 225, 0.25),
-    inset 0 2px 2px 0 rgba(255, 255, 255, 1),
+    0 24px 52px -12px rgba(20, 83, 45, 0.12),
+    0 0 24px rgba(34, 197, 94, 0.1),
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.98),
     inset 0 -1px 2px 0 rgba(217, 233, 223, 0.45);
 }
 
+.liquid-glass-card::before,
+.liquid-glass-hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.35) 0%, rgba(16, 185, 129, 0.22) 45%, rgba(163, 230, 53, 0.12) 70%, transparent 100%);
+  opacity: 0.42;
+  filter: blur(28px);
+  animation: green-blob-bounce 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.liquid-glass-card > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]),
+.liquid-glass-hero > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]),
+.uiverse-green-card > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]):not(.uiverse-blob-green) {
+  position: relative;
+  z-index: 1;
+}
+
 .liquid-glass-hero {
-  background: rgba(240, 242, 235, 0.88);
-  backdrop-filter: blur(32px) saturate(170%);
-  -webkit-backdrop-filter: blur(32px) saturate(170%);
-  border: 2px solid rgba(255, 255, 255, 0.98);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.64);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 2px solid rgba(169, 201, 187, 0.85);
   border-radius: 32px;
   color: #23322E;
   box-shadow: 
-    0 32px 64px -16px rgba(46, 58, 55, 0.12),
-    0 8px 24px -4px rgba(185, 220, 225, 0.28),
-    0 0 35px 0 rgba(169, 201, 187, 0.35),
+    0 32px 64px -16px rgba(20, 83, 45, 0.14),
+    0 0 35px rgba(34, 197, 94, 0.18),
     inset 0 2px 3px 0 rgba(255, 255, 255, 1),
     inset 0 -1.5px 3px 0 rgba(217, 233, 223, 0.5);
 }
 
 .liquid-glass-interactive {
-  background: rgba(240, 242, 235, 0.75);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1.5px solid rgba(169, 201, 187, 0.55);
   border-radius: 24px;
   color: #23322E;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .liquid-glass-interactive:hover {
-  background: rgba(240, 242, 235, 0.94);
-  border-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(34, 197, 94, 0.75);
   box-shadow: 
-    0 16px 36px -6px rgba(46, 58, 55, 0.12),
-    0 0 24px rgba(169, 201, 187, 0.4);
+    0 16px 36px -6px rgba(20, 83, 45, 0.14),
+    0 0 24px rgba(34, 197, 94, 0.35);
   transform: translateY(-2px);
 }
 
@@ -286,4 +323,132 @@
 
 .text-glow {
   text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================== */
+/* UIVERSE.IO CARD DESIGN (dylanharriscameron) - GREEN EDITION     */
+/* ============================================================== */
+.uiverse-green-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.75);
+  box-shadow: 
+    0 24px 50px -12px rgba(20, 83, 45, 0.14),
+    0 0 24px rgba(34, 197, 94, 0.12),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.uiverse-green-card:hover {
+  border-color: rgba(34, 197, 94, 0.85);
+  box-shadow: 
+    0 28px 60px -10px rgba(20, 83, 45, 0.2),
+    0 0 32px rgba(34, 197, 94, 0.25),
+    inset 0 2px 3px rgba(255, 255, 255, 1);
+}
+
+/* Moving Green Blob behind the card glass */
+.uiverse-blob-green {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.38) 0%, rgba(16, 185, 129, 0.25) 45%, rgba(163, 230, 53, 0.15) 70%, transparent 100%);
+  opacity: 0.45;
+  filter: blur(26px);
+  animation: green-blob-bounce 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes green-blob-bounce {
+  0% {
+    transform: translate(-100%, -100%) translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate(-100%, -100%) translate3d(85px, -20px, 0);
+  }
+  50% {
+    transform: translate(-100%, -100%) translate3d(85px, 85px, 0);
+  }
+  75% {
+    transform: translate(-100%, -100%) translate3d(-20px, 85px, 0);
+  }
+  100% {
+    transform: translate(-100%, -100%) translate3d(0, 0, 0);
+  }
+}
+
+/* ============================================================== */
+/* UIVERSE.IO HARMONIZED GREEN WAVE BUTTON (dexter-st adapted)    */
+/* Balanced, luminous emerald & sage wave — zero dark patches     */
+/* ============================================================== */
+.btn-dexter-green {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #0E5E35;
+  border: 1.5px solid rgba(220, 252, 231, 0.9);
+  border-radius: 9999px;
+  box-shadow: 
+    0 8px 24px -4px rgba(14, 94, 53, 0.35),
+    0 0 16px rgba(34, 197, 94, 0.4),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-dexter-green:hover {
+  transform: scale(1.03) translateY(-1px);
+  border-color: #FFFFFF;
+  box-shadow: 
+    0 12px 28px -4px rgba(14, 94, 53, 0.45),
+    0 0 24px rgba(34, 197, 94, 0.65),
+    inset 0 2px 3px rgba(255, 255, 255, 0.95);
+}
+
+.btn-dexter-green:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow: 
+    0 4px 12px -2px rgba(14, 94, 53, 0.4),
+    0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.btn-rotating-green-layer {
+  animation: rotateGreen 8s linear infinite;
+}
+
+@keyframes rotateGreen {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn-glass-light-beam {
+  animation: pulseGlassLight 3.2s ease-in-out infinite;
+}
+
+@keyframes pulseGlassLight {
+  0%, 100% { opacity: 0.95; transform: scaleY(1); }
+  50% { opacity: 0.3; transform: scaleY(0.85); }
+}
+
+.text-shadow-green {
+  text-shadow: 0 1px 2px rgba(5, 46, 22, 0.95), 0 0 10px rgba(34, 197, 94, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-rotating-green-layer,
+  .btn-glass-light-beam,
+  .uiverse-blob-green {
+    animation: none !important;
+  }
 }

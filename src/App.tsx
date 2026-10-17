@@ -12,7 +12,8 @@ import {
   User,
 } from 'lucide-react';
 import { APP_METADATA, UNIVERSE_CONFIG } from './engine/fuzzyConfig';
-import { MistyMountainLandscape } from './components/common/MistyMountainLandscape';
+import { SoffitBackground } from './components/common/SoffitBackground';
+import { PandaSoundscapesPlayer } from './components/soundscapes/PandaSoundscapesPlayer';
 import { HomeView } from './components/views/HomeView';
 import { AssessmentTab } from './components/tabs/AssessmentTab';
 import { HistoryTab } from './components/tabs/HistoryTab';
@@ -25,6 +26,7 @@ import { AccountTab } from './components/tabs/AccountTab';
 import { FloatingChat } from './components/FloatingChat';
 import { FloatingStressinaDock } from './components/mascot/FloatingStressinaDock';
 import { AuthModal } from './components/auth/AuthModal';
+import { FuturisticGreenButton } from './components/common/FuturisticGreenButton';
 import { triggerHaptic } from './utils/haptics';
 import { companionVoice } from './utils/companionVoice';
 import {
@@ -134,8 +136,8 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen text-slate-800 flex flex-col antialiased relative selection:bg-emerald-200 selection:text-emerald-950 font-sans">
-      {/* High-resolution Panoramic Misty Mountain & Eucalyptus Landscape Background */}
-      <MistyMountainLandscape />
+      {/* Soffit — Plain WebGL2 Fullscreen Animated Gradient Background */}
+      <SoffitBackground />
 
       {/* Reusable Auth Modal */}
       <AuthModal
@@ -167,18 +169,25 @@ export const App: React.FC = () => {
         - Center: Home, Daily Check-in, Stress Analytics, Stressina's Corner, Help
         - Right: Tools dropdown, User Profile icon, and Logout glass button
       */}
-      <header className="sticky top-0 z-40 liquid-nav-bar px-4 lg:px-8 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      {/* 
+        TOP NAVIGATION BAR:
+        Matching Blueprint Specification:
+        - Left: "Stressina.Ai" in green gradient color
+        - Center: Home, Daily Check-in, Stress Analytics, Stressina's Corner, Help
+        - Right: Tools dropdown, User Profile icon, and Logout glass button
+      */}
+      <header className="sticky top-0 z-40 liquid-nav-bar px-2.5 sm:px-4 lg:px-8 py-1.5 sm:py-2.5 w-full">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-4">
           
-          {/* Left: Brand Title */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Left: Hamburger (mobile) & Brand Title */}
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/70 text-slate-700 hover:bg-white border border-white shadow-xs cursor-pointer"
+              className="lg:hidden p-1.5 rounded-xl bg-white/75 text-slate-700 hover:bg-white border border-white shadow-2xs cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-emerald-700" /> : <Menu className="w-5 h-5 text-emerald-700" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 text-emerald-700" /> : <Menu className="w-4 h-4 text-emerald-700" />}
             </button>
 
             <button
@@ -187,14 +196,14 @@ export const App: React.FC = () => {
                 triggerHaptic('selection');
                 setActiveTab('home');
               }}
-              className="flex items-center gap-2.5 text-left cursor-pointer group"
+              className="flex items-center gap-1.5 sm:gap-2.5 text-left cursor-pointer group"
             >
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-lime-400 p-0.5 shadow-xs flex items-center justify-center shrink-0">
-                <div className="w-full h-full bg-white/95 rounded-[10px] flex items-center justify-center shadow-inner">
-                  <span className="text-base select-none leading-none">🐼</span>
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-lime-400 p-0.5 shadow-2xs flex items-center justify-center shrink-0">
+                <div className="w-full h-full bg-white/95 rounded-[6px] sm:rounded-[9px] flex items-center justify-center shadow-inner">
+                  <span className="text-xs sm:text-base select-none leading-none">🐼</span>
                 </div>
               </div>
-              <span className="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-lime-600 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity drop-shadow-xs">
+              <span className="text-base sm:text-2xl font-black tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-lime-600 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity drop-shadow-xs">
                 Stressina.Ai
               </span>
             </button>
@@ -230,26 +239,28 @@ export const App: React.FC = () => {
             })}
           </nav>
 
-          {/* Right: Tools, User Avatar & Logout */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            
-            {/* Scientific Tools Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+          {/* Right Controls: Soundscapes, Tools, Single Auth Button */}
+          <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
+            {/* Panda Soundscapes Player (Compact & Touch-friendly) */}
+            <PandaSoundscapesPlayer compact className="shrink-0" />
+
+            {/* Scientific Tools Dropdown (Desktop & Tablets) */}
+            <div className="relative hidden md:block" ref={dropdownRef}>
               <button
                 type="button"
                 onClick={() => {
                   triggerHaptic('selection');
                   setToolsDropdownOpen(!toolsDropdownOpen);
                 }}
-                className={`text-xs px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 cursor-pointer border ${
+                className={`text-xs px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 cursor-pointer border ${
                   toolsDropdownOpen || ['visuals', 'arch', 'dataset', 'account'].includes(activeTab)
                     ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-xs font-bold'
-                    : 'bg-white/70 text-slate-700 border-white/90 hover:bg-white font-semibold'
+                    : 'bg-white/75 text-slate-700 border-white/90 hover:bg-white font-semibold'
                 }`}
                 title="Scientific Tools & Diagrams"
               >
                 <Layers className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden sm:inline">Tools</span>
+                <span>Tools</span>
                 <ChevronDown className="w-3 h-3 text-slate-500" />
               </button>
 
@@ -293,131 +304,190 @@ export const App: React.FC = () => {
               )}
             </div>
 
-            {/* Profile Avatar Icon with Dropdown */}
-            <div className="relative" ref={profileRef}>
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic('selection');
-                  setProfileDropdownOpen(!profileDropdownOpen);
-                }}
-                className="w-8 h-8 rounded-full bg-white/80 hover:bg-white border border-white flex items-center justify-center cursor-pointer text-slate-700 shadow-xs transition-transform active:scale-95"
-                title={currentUser ? currentUser.display_name : 'User Profile'}
-              >
-                <User className="w-4 h-4 text-emerald-700" />
-              </button>
-
-              {profileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-52 rounded-2xl liquid-glass p-3 shadow-2xl border border-white animate-fade-in z-50 text-xs">
-                  {currentUser ? (
-                    <div className="space-y-2">
-                      <div className="border-b border-slate-200 pb-2">
-                        <p className="font-bold text-slate-800 truncate">{currentUser.display_name}</p>
-                        <p className="text-[10px] text-slate-500 truncate">{currentUser.email}</p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          triggerHaptic('selection');
-                          setActiveTab('account');
-                          setProfileDropdownOpen(false);
-                        }}
-                        className="w-full text-left py-1 text-slate-700 hover:text-emerald-700 font-medium cursor-pointer"
-                      >
-                        Account Settings
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          triggerHaptic('light');
-                          store.setCurrentUser(null);
-                          setCurrentUser(null);
-                          setProfileDropdownOpen(false);
-                          showToast('Logged out');
-                        }}
-                        className="w-full text-left py-1 text-rose-600 hover:text-rose-700 font-semibold cursor-pointer"
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <p className="text-[11px] text-slate-500">Guest Session</p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          triggerHaptic('selection');
-                          openAuthWithPrompt('Sign in to view your profile and saved assessments.', 'login');
-                          setProfileDropdownOpen(false);
-                        }}
-                        className="w-full py-1.5 rounded-lg liquid-button-sage text-center font-bold text-white cursor-pointer shadow-xs"
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Logout / Sign In Button */}
+            {/* Exactly ONE User Profile / Sign In Button (Zero duplication, zero mobile overflow) */}
             {currentUser ? (
-              <button
-                type="button"
-                onClick={() => {
-                  triggerHaptic('light');
-                  store.setCurrentUser(null);
-                  setCurrentUser(null);
-                  showToast('Logged out');
-                }}
-                className="liquid-button-clear px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                <LogOut className="w-3.5 h-3.5 text-slate-600" />
-                <span className="hidden sm:inline text-slate-700">Logout</span>
-              </button>
+              <div className="relative" ref={profileRef}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic('selection');
+                    setProfileDropdownOpen(!profileDropdownOpen);
+                  }}
+                  className="h-7 sm:h-8 px-2 sm:px-3 rounded-full bg-white/85 hover:bg-white border border-white flex items-center gap-1.5 cursor-pointer text-slate-800 shadow-2xs transition-transform active:scale-95"
+                  title={`Logged in as ${currentUser.display_name}`}
+                >
+                  <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] sm:text-[10px] font-bold">
+                    {currentUser.display_name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="hidden sm:inline text-xs font-bold max-w-[80px] truncate">
+                    {currentUser.display_name.split(' ')[0]}
+                  </span>
+                </button>
+
+                {profileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-56 rounded-2xl liquid-glass p-3 shadow-2xl border border-white animate-fade-in z-50 text-xs">
+                    <div className="border-b border-slate-200 pb-2 mb-2">
+                      <p className="font-bold text-slate-800 truncate">{currentUser.display_name}</p>
+                      <p className="text-[10px] text-slate-500 truncate">{currentUser.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        triggerHaptic('selection');
+                        setActiveTab('account');
+                        setProfileDropdownOpen(false);
+                      }}
+                      className="w-full text-left py-1.5 px-2 rounded-lg hover:bg-white text-slate-700 font-medium cursor-pointer flex items-center gap-2"
+                    >
+                      <Settings className="w-3.5 h-3.5 text-emerald-700" />
+                      <span>Account & Settings</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        triggerHaptic('light');
+                        store.setCurrentUser(null);
+                        setCurrentUser(null);
+                        setProfileDropdownOpen(false);
+                        showToast('Logged out');
+                      }}
+                      className="w-full text-left py-1.5 px-2 rounded-lg hover:bg-rose-50 text-rose-600 font-semibold cursor-pointer flex items-center gap-2"
+                    >
+                      <LogOut className="w-3.5 h-3.5 text-rose-500" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
-              <button
-                type="button"
+              <FuturisticGreenButton
+                variant="compact"
                 onClick={() => {
                   triggerHaptic('selection');
                   openAuthWithPrompt('Sign in to save your assessments and habits.', 'login');
                 }}
-                className="liquid-button-clear px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                ariaLabel="Sign In"
+                className="shrink-0 text-[11px] sm:text-xs px-2.5 sm:px-3.5 py-1 sm:py-1.5"
               >
-                <User className="w-3.5 h-3.5 text-emerald-700" />
-                <span className="text-slate-800">Sign In</span>
-              </button>
+                <User className="w-3 h-3 text-white" />
+                <span className="text-[11px] sm:text-xs">Sign In</span>
+              </FuturisticGreenButton>
             )}
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer with Full Tools, Soundscapes & Auth */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-3 border-t border-slate-200/60 space-y-1 animate-fade-in">
-            {mainNavItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => {
-                  triggerHaptic('selection');
-                  setActiveTab(item.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`w-full px-4 py-2 rounded-xl text-left text-xs font-semibold flex items-center justify-between ${
-                  activeTab === item.id
-                    ? 'bg-emerald-700 text-white font-bold'
-                    : 'text-slate-700 hover:bg-white/60'
-                }`}
-              >
-                <span>{item.label}</span>
-              </button>
-            ))}
+          <div className="lg:hidden mt-2.5 pt-2.5 border-t border-slate-200/60 space-y-2.5 animate-fade-in">
+            {/* User Session Banner in Mobile Drawer */}
+            <div className="p-2.5 rounded-2xl bg-white/80 border border-white flex items-center justify-between">
+              {currentUser ? (
+                <div className="flex items-center justify-between w-full">
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{currentUser.display_name}</p>
+                    <p className="text-[10px] text-slate-500">{currentUser.email}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      triggerHaptic('light');
+                      store.setCurrentUser(null);
+                      setCurrentUser(null);
+                      setMobileMenuOpen(false);
+                      showToast('Logged out');
+                    }}
+                    className="text-xs font-bold text-rose-600 px-3 py-1 rounded-lg bg-rose-50 border border-rose-200 cursor-pointer"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between w-full">
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Guest Session</p>
+                    <p className="text-[10px] text-slate-500">Sign in to sync your data</p>
+                  </div>
+                  <FuturisticGreenButton
+                    variant="compact"
+                    onClick={() => {
+                      triggerHaptic('selection');
+                      openAuthWithPrompt('Sign in to save your assessments and habits.', 'login');
+                      setMobileMenuOpen(false);
+                    }}
+                    ariaLabel="Sign In"
+                    className="shrink-0"
+                  >
+                    <span>Sign In</span>
+                  </FuturisticGreenButton>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Soundscapes Section */}
+            <div className="p-2.5 rounded-2xl bg-white/80 border border-white space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-900 flex items-center gap-1.5">
+                  <span>🎋</span>
+                  <span>Nature Soundscapes</span>
+                </span>
+                <PandaSoundscapesPlayer compact />
+              </div>
+            </div>
+
+            {/* Main Navigation Items */}
+            <div className="space-y-1">
+              {mainNavItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    triggerHaptic('selection');
+                    setActiveTab(item.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full px-3.5 py-2 rounded-xl text-left text-xs font-semibold flex items-center justify-between cursor-pointer ${
+                    activeTab === item.id
+                      ? 'bg-emerald-700 text-white font-bold shadow-xs'
+                      : 'text-slate-700 hover:bg-white/60'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Tools Section */}
+            <div className="pt-2 border-t border-slate-200/60">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 px-2 mb-1 block">
+                Tools & Diagnostics
+              </span>
+              <div className="grid grid-cols-2 gap-1.5">
+                {advancedToolItems.map((tool) => {
+                  const Icon = tool.icon;
+                  return (
+                    <button
+                      key={tool.id}
+                      type="button"
+                      onClick={() => {
+                        triggerHaptic('selection');
+                        setActiveTab(tool.id);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="p-2 rounded-xl bg-white/60 hover:bg-white text-left flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer"
+                    >
+                      <Icon className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+                      <span className="truncate">{tool.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
       </header>
 
       {/* Main Content Viewport */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
         {/* 1. Home View (Central Hero Section with Zen Panda & Side Panels) */}
         {activeTab === 'home' && (
           <HomeView
@@ -587,10 +657,11 @@ export const App: React.FC = () => {
         </div>
       </footer>
 
-      {/* Floating Chat Companion */}
+      {/* Floating Chat Companion: Only show floating launcher button on Home view */}
       <FloatingChat
         isOpenControlled={floatingChatOpen}
         onToggleOpen={(open) => setFloatingChatOpen(open)}
+        showLauncher={activeTab === 'home'}
         onNavigateToTab={(t) => {
           if (['breathing', 'candy_crush', 'chat'].includes(t)) {
             setActiveTab('corner');
@@ -601,8 +672,8 @@ export const App: React.FC = () => {
         }}
       />
 
-      {/* Floating Stressina Companion Dock on Secondary Tabs */}
-      {activeTab !== 'home' && (
+      {/* Floating Stressina Companion Dock on Secondary Tabs: Never overlaps Corner, Breathing or Games */}
+      {activeTab !== 'home' && !['corner', 'breathing', 'candy_crush', 'chat'].includes(activeTab) && (
         <FloatingStressinaDock
           currentTab={activeTab}
           onNavigate={(tab) => {

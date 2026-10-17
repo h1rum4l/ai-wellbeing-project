@@ -72,16 +72,76 @@ export const HomeView: React.FC<HomeViewProps> = ({
       
       {/* 
         3-Column Layout Matching User Blueprint:
-        - Left: "My Stress Level / Daily check-in" with Arch & Pillar Gauge + Panda Head Icon
-        - Center: "Stressina.Ai" Hero Modal with Zen Panda on Lotus + 2 Pill Buttons
-        - Right: Stacked Frosted Glass Cards (Mindful Exercises & Supportive Chat)
+        - Mobile View: Central Hero (Stressina.Ai with Panda) first (order-1), Stress Level check-in second (order-2), Exercises third (order-3)
+        - Desktop View (lg): Left: "My Stress Level", Center: "Stressina.Ai", Right: Exercises & Chat
       */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
         
         {/* ============================================================== */}
-        {/* LEFT PANEL: My Stress Level / Daily check-in                    */}
+        {/* 1. CENTRAL HERO SECTION: STRESSINA.AI                          */}
+        {/* Mobile & Small screens: Naturally first in DOM                  */}
+        {/* Desktop (lg): Placed in center columns 4 to 9                   */}
         {/* ============================================================== */}
-        <div className="lg:col-span-3 flex flex-col items-center justify-between liquid-glass p-6 text-center relative overflow-hidden group">
+        <div className="lg:col-start-4 lg:col-span-6 lg:row-start-1 flex flex-col justify-between liquid-glass-hero p-4 sm:p-7 md:p-8 text-center relative overflow-hidden shadow-2xl">
+          
+          {/* Subtle Ambient Radial Halo — zero height in document flow */}
+          <div className="absolute inset-0 bg-radial from-emerald-300/25 via-teal-200/15 to-transparent rounded-3xl blur-2xl pointer-events-none" />
+
+          {/* Top Tag & Main Headline — Immediate at top of card, zero empty gap */}
+          <div className="relative z-10 flex flex-col items-center pt-1 sm:pt-2">
+            <div className="mb-1">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-lime-600 bg-clip-text text-transparent drop-shadow-xs">
+                Stressina.Ai
+              </span>
+            </div>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-lg mx-auto">
+              Your Space to Breathe<br />and Coping Stress
+            </h1>
+          </div>
+
+          {/* Interactive Stressina Panda Companion with Voice & Anti-Gravity Arena */}
+          <div className="relative z-10 my-2 sm:my-3">
+            <InteractiveStressinaCompanion
+              lastAssessment={lastAssessment}
+              onNavigateToTab={onNavigate}
+            />
+          </div>
+
+          {/* Two Prominent Action Buttons from Reference Mockup */}
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 pt-2 w-full max-w-sm sm:max-w-none mx-auto">
+            {/* 1. "Get Started" Pill Button (Soft sage-green gradient) */}
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('medium');
+                onNavigate('checkin');
+              }}
+              className="w-full sm:w-auto px-7 sm:px-8 py-2.5 sm:py-3 rounded-full liquid-button-sage text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Get Started</span>
+            </button>
+
+            {/* 2. "Quick Scan →" Pill Button (Clear liquid frosted glass) */}
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('selection');
+                onQuickScan();
+              }}
+              className="w-full sm:w-auto px-6 sm:px-7 py-2.5 sm:py-3 rounded-full liquid-button-clear text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+            >
+              <span className="text-slate-800">Quick Scan</span>
+              <span className="text-emerald-700 font-bold">→</span>
+            </button>
+          </div>
+        </div>
+
+        {/* ============================================================== */}
+        {/* 2. LEFT PANEL: My Stress Level / Daily check-in                 */}
+        {/* Mobile & Small screens: Second in DOM (below hero)              */}
+        {/* Desktop (lg): Placed in left columns 1 to 3                     */}
+        {/* ============================================================== */}
+        <div className="lg:col-start-1 lg:col-span-3 lg:row-start-1 flex flex-col items-center justify-between liquid-glass p-4 sm:p-6 text-center relative overflow-hidden group">
           {/* Subtle Ambient Rim Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
 
@@ -218,66 +278,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
 
         {/* ============================================================== */}
-        {/* CENTRAL HERO SECTION: STRESSINA.AI                            */}
+        {/* 3. RIGHT PANEL: Stacked Frosted Glass Panels                    */}
+        {/* Mobile & Small screens: Third in DOM                            */}
+        {/* Desktop (lg): Placed in right columns 10 to 12                  */}
         {/* ============================================================== */}
-        <div className="lg:col-span-6 flex flex-col justify-between liquid-glass-hero p-6 sm:p-9 text-center relative overflow-hidden shadow-2xl">
-          
-          {/* Subtle Backlight Radial Halo */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-gradient-to-r from-emerald-300/25 via-teal-200/20 to-transparent rounded-full blur-3xl pointer-events-none" />
-
-          {/* Top Tag & Main Headline */}
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="mb-2">
-              <span className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-emerald-600 via-teal-500 to-lime-600 bg-clip-text text-transparent drop-shadow-xs">
-                Stressina.Ai
-              </span>
-            </div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-lg mx-auto">
-              Your Space to Breathe<br />and Coping Stress
-            </h1>
-          </div>
-
-          {/* Interactive Stressina Panda Companion with Voice & Anti-Gravity Arena */}
-          <div className="relative z-10 my-3">
-            <InteractiveStressinaCompanion
-              lastAssessment={lastAssessment}
-              onNavigateToTab={onNavigate}
-            />
-          </div>
-
-          {/* Two Prominent Action Buttons from Reference Mockup */}
-          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
-            {/* 1. "Get Started" Pill Button (Soft sage-green gradient) */}
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic('medium');
-                onNavigate('checkin');
-              }}
-              className="w-full sm:w-auto px-8 py-3 rounded-full liquid-button-sage text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shadow-lg"
-            >
-              <span>Get Started</span>
-            </button>
-
-            {/* 2. "Quick Scan →" Pill Button (Clear liquid frosted glass) */}
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic('selection');
-                onQuickScan();
-              }}
-              className="w-full sm:w-auto px-7 py-3 rounded-full liquid-button-clear text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-            >
-              <span className="text-slate-800">Quick Scan</span>
-              <span className="text-emerald-700 font-bold">→</span>
-            </button>
-          </div>
-        </div>
-
-        {/* ============================================================== */}
-        {/* RIGHT PANEL: Stacked Frosted Glass Panels                      */}
-        {/* ============================================================== */}
-        <div className="lg:col-span-3 flex flex-col gap-6 justify-between">
+        <div className="lg:col-start-10 lg:col-span-3 lg:row-start-1 flex flex-col gap-4 sm:gap-6 justify-between">
           
           {/* Top Panel: Mindful Exercises */}
           <div

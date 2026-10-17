@@ -15,6 +15,7 @@ import {
   Sparkles,
   Trophy,
   Flame,
+  Camera,
 } from 'lucide-react';
 import { PrivacyPreferences, UserAccount } from '../../types';
 import { store } from '../../storage/store';
@@ -284,6 +285,65 @@ export const AccountTab: React.FC<AccountTabProps> = ({ currentUser, onUserChang
                   />
                 </label>
               ))}
+            </div>
+          </div>
+
+          {/* Stressina Mascot Artwork Customisation */}
+          <div className="space-y-3 pt-3 border-t border-slate-200">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+              <Camera className="w-4 h-4 text-emerald-700" />
+              <span>Stressina Mascot Artwork</span>
+            </h4>
+            <div className="p-4 rounded-2xl bg-white/60 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-2xl bg-white/90 border border-emerald-100 flex items-center justify-center shadow-xs overflow-hidden">
+                  <StressinaPanda size="sm" showLotusPlatform={false} showAura={false} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-800">Custom Mascot Artwork</p>
+                  <p className="text-[11px] text-slate-500">
+                    Upload your custom 3D panda image to display across the home hero, companion buttons, and sanctuary tabs.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <label className="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer shadow-xs transition-colors flex items-center gap-1.5">
+                  <Camera className="w-3.5 h-3.5" />
+                  <span>Upload Image</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = (ev) => {
+                        const dataUrl = ev.target?.result as string;
+                        if (dataUrl) {
+                          store.setCustomPandaImage(dataUrl);
+                          triggerHaptic('medium');
+                          window.dispatchEvent(new Event('stressina_panda_image_updated'));
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+                </label>
+                {store.getCustomPandaImage() && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      store.setCustomPandaImage(null);
+                      triggerHaptic('light');
+                      window.dispatchEvent(new Event('stressina_panda_image_updated'));
+                    }}
+                    className="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200 cursor-pointer transition-colors"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 

@@ -22,6 +22,7 @@ import { store } from '../../storage/store';
 import { habitsStore } from '../../storage/habitsStore';
 import { triggerHaptic } from '../../utils/haptics';
 import { StressCrushGame } from '../games/StressCrushGame';
+import { PandaSoundscapesPlayer } from '../soundscapes/PandaSoundscapesPlayer';
 
 interface RelaxAndPlayTabProps {
   currentUser?: UserAccount | null;
@@ -377,7 +378,7 @@ export const RelaxAndPlayTab: React.FC<RelaxAndPlayTabProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
           {[
             { id: 'breathing', label: 'Guided Breathing', icon: Wind },
-            { id: 'candy_crush', label: 'Stress Crush 🍬', icon: Sparkles },
+            { id: 'candy_crush', label: 'Stress Crush', icon: Sparkles },
             { id: 'grounding', label: '5-4-3-2-1 Grounding', icon: Eye },
             { id: 'matching', label: 'Calm Pairs', icon: Trophy },
             { id: 'checkin', label: 'Mindful Check-in', icon: Smile },
@@ -427,6 +428,11 @@ export const RelaxAndPlayTab: React.FC<RelaxAndPlayTabProps> = ({
         <div className="liquid-glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden border border-white shadow-md text-slate-800">
           {/* Ambient radial blur backlight */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Interactive Panda Nature Soundscapes Bar */}
+          <div className="relative z-10 mb-6">
+            <PandaSoundscapesPlayer />
+          </div>
 
           {/* Top Controls: Technique, Duration, Sound */}
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
