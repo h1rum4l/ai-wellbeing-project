@@ -1,9 +1,16 @@
-# Virtual environment
+# Node & Build artifacts
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# AI Studio internal files
+.aistudio/
+
+# Virtual environment & Python cache
 venv/
 .venv/
 env/
-
-# Python cache
 __pycache__/
 *.pyc
 .pytest_cache/
@@ -14,19 +21,16 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Secrets (never commit these)
+# Secrets & logs (never commit these)
 .env
-
-# API keys (never commit)
-.streamlit/secrets.toml
-
-# Local user data and runtime files (never commit)
-data/*.sqlite
-data/*.sqlite3
-data/*.db
+.env.*
+!.env.example
 *.log
 .streamlit/secrets.toml
 
-# Local wellbeing database files
-data/*.sqlite*
+# Local databases
+data/*.sqlite
+data/*.sqlite3
 data/*.db
+data/*.sqlite*
+

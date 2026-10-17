@@ -1,0 +1,8 @@
+{
+  "name": "stressina.AI — Serene Decision Support & Mascot Companion",
+  "description": "An intelligent healthcare and well-being decision-support system featuring Stressina the Panda, Mamdani fuzzy inference, and a tranquil liquid-glass aesthetic.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ],
+  "permissions": []
+}

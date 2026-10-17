@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Sky Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8F1ED"/>
+      <stop offset="30%" stop-color="#DEEBE4"/>
+      <stop offset="55%" stop-color="#D2E3DA"/>
+      <stop offset="80%" stop-color="#C5D9CE"/>
+      <stop offset="100%" stop-color="#B8CDC1"/>
+    </linearGradient>
+
+    <!-- Sun Glow Gradient -->
+    <radialGradient id="sunGlow" cx="50%" cy="18%" r="45%">
+      <stop offset="0%" stop-color="#FFFDF7" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#FEF9E7" stop-opacity="0.5"/>
+      <stop offset="65%" stop-color="#E8F8F0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#D2E3DA" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Mountain Layer 1 (Furthest misty peaks) -->
+    <linearGradient id="farPeaks" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A8BFB4" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#93ABA0" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#B8CDC1" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Mountain Layer 2 (Mid-distant peaks) -->
+    <linearGradient id="midPeaks" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7D998D"/>
+      <stop offset="60%" stop-color="#698579"/>
+      <stop offset="100%" stop-color="#557165"/>
+    </linearGradient>
+
+    <!-- Mountain Layer 3 (Lush green slopes) -->
+    <linearGradient id="slopeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4F6D60"/>
+      <stop offset="70%" stop-color="#3C564A"/>
+      <stop offset="100%" stop-color="#2B4036"/>
+    </linearGradient>
+
+    <!-- Foreground Hills & Ridge -->
+    <linearGradient id="foreRidge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#344D42"/>
+      <stop offset="60%" stop-color="#243830"/>
+      <stop offset="100%" stop-color="#182721"/>
+    </linearGradient>
+
+    <!-- Alpine Lake Surface Gradient -->
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#466155" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#364E43"/>
+      <stop offset="70%" stop-color="#283C33"/>
+      <stop offset="100%" stop-color="#1C2C25"/>
+    </linearGradient>
+
+    <!-- Horizontal Mist Bands -->
+    <linearGradient id="mistBand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="mistSoft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F2F8F5" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#F2F8F5" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#E5ECE8" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Soft Blur Filters for Atmosphere -->
+    <filter id="softMistBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+
+    <filter id="heavyFogBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="32"/>
+    </filter>
+  </defs>
+
+  <!-- 1. Base Sky -->
+  <rect width="1920" height="1080" fill="url(#skyGrad)"/>
+
+  <!-- 2. Diffused Sunlight Aura -->
+  <circle cx="960" cy="220" r="600" fill="url(#sunGlow)"/>
+
+  <!-- 3. Soft Distant Cloud Formations in Upper Sky -->
+  <path d="M 0 160 Q 300 120 620 170 T 1280 150 Q 1600 130 1920 180 L 1920 320 L 0 320 Z" fill="#FFFFFF" opacity="0.22" filter="url(#heavyFogBlur)"/>
+  <path d="M 0 240 Q 420 190 840 230 T 1600 210 Q 1800 230 1920 220 L 1920 380 L 0 380 Z" fill="#E8F2EC" opacity="0.35" filter="url(#heavyFogBlur)"/>
+
+  <!-- 4. Layer 1: Majestic Distant Misty Mountain Peaks -->
+  <path d="M 0 460 L 140 370 L 320 440 L 520 330 L 710 420 L 890 310 L 1080 390 L 1260 280 L 1440 380 L 1640 290 L 1780 370 L 1920 320 L 1920 700 L 0 700 Z" fill="url(#farPeaks)"/>
+
+  <!-- Fog Rolling Across Far Peaks -->
+  <rect y="380" width="1920" height="140" fill="url(#mistBand)" filter="url(#softMistBlur)"/>
+
+  <!-- 5. Layer 2: Mid-Range Mountain Ridges with Gentle Slopes -->
+  <path d="M 0 540 Q 220 410 480 490 T 960 430 T 1440 480 Q 1720 390 1920 460 L 1920 850 L 0 850 Z" fill="url(#midPeaks)"/>
+  
+  <!-- Pine Tree Silhouettes along Mid Ridge -->
+  <g fill="#4E685D" opacity="0.65">
+    <polygon points="120,490 128,460 136,490"/>
+    <polygon points="138,495 145,468 152,495"/>
+    <polygon points="160,490 167,465 174,490"/>
+    <polygon points="380,480 388,450 396,480"/>
+    <polygon points="400,485 407,458 414,485"/>
+    <polygon points="620,455 628,425 636,455"/>
+    <polygon points="640,460 648,432 656,460"/>
+    <polygon points="880,440 888,410 896,440"/>
+    <polygon points="902,445 909,418 916,445"/>
+    <polygon points="1180,450 1188,420 1196,450"/>
+    <polygon points="1360,470 1368,442 1376,470"/>
+    <polygon points="1520,450 1528,422 1536,450"/>
+    <polygon points="1740,430 1748,400 1756,430"/>
+  </g>
+
+  <!-- Deep Valley Fog Layer -->
+  <rect y="470" width="1920" height="180" fill="url(#mistSoft)" filter="url(#heavyFogBlur)"/>
+
+  <!-- 6. Layer 3: Lush Eucalyptus & Bamboo Green Slopes (Left & Right) -->
+  <!-- Left Slope -->
+  <path d="M 0 490 Q 280 570 560 660 Q 720 720 860 800 L 0 800 Z" fill="url(#slopeGrad)"/>
+  <!-- Right Slope -->
+  <path d="M 1920 480 Q 1640 560 1360 670 Q 1200 730 1060 800 L 1920 800 Z" fill="url(#slopeGrad)"/>
+
+  <!-- Pine and Bamboo Details on Left Slope -->
+  <g fill="#2D4338" opacity="0.75">
+    <polygon points="80,550 90,510 100,550"/>
+    <polygon points="110,565 120,520 130,565"/>
+    <polygon points="150,580 162,535 174,580"/>
+    <polygon points="220,605 232,558 244,605"/>
+    <polygon points="310,640 324,590 338,640"/>
+    <polygon points="410,670 425,620 440,670"/>
+    <polygon points="520,705 535,655 550,705"/>
+  </g>
+
+  <!-- Pine and Bamboo Details on Right Slope -->
+  <g fill="#2D4338" opacity="0.75">
+    <polygon points="1840,540 1830,500 1820,540"/>
+    <polygon points="1810,555 1800,510 1790,555"/>
+    <polygon points="1760,575 1748,528 1736,575"/>
+    <polygon points="1690,605 1678,555 1666,605"/>
+    <polygon points="1600,638 1586,585 1572,638"/>
+    <polygon points="1490,675 1475,620 1460,675"/>
+    <polygon points="1380,710 1365,655 1350,710"/>
+  </g>
+
+  <!-- 7. Ambient Mountain Mist Ribbon -->
+  <path d="M 100 680 Q 580 620 1020 670 T 1820 640 L 1820 740 Q 1380 770 940 730 T 100 750 Z" fill="#FFFFFF" opacity="0.45" filter="url(#softMistBlur)"/>
+
+  <!-- 8. Foreground Valley Shore & Water Baseline (Lake Surface) -->
+  <rect y="780" width="1920" height="300" fill="url(#lakeGrad)"/>
+
+  <!-- Mountain Water Reflection Shimmer -->
+  <g opacity="0.25">
+    <ellipse cx="960" cy="840" rx="720" ry="25" fill="#E8F8F0" filter="url(#softMistBlur)"/>
+    <ellipse cx="480" cy="880" rx="380" ry="18" fill="#D2EBE0" filter="url(#softMistBlur)"/>
+    <ellipse cx="1440" cy="880" rx="380" ry="18" fill="#D2EBE0" filter="url(#softMistBlur)"/>
+  </g>
+
+  <!-- Horizontal Lake Ripple Lines -->
+  <g stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2">
+    <line x1="240" y1="810" x2="680" y2="810"/>
+    <line x1="820" y1="815" x2="1340" y2="815"/>
+    <line x1="1480" y1="810" x2="1780" y2="810"/>
+    <line x1="120" y1="835" x2="480" y2="835"/>
+    <line x1="600" y1="840" x2="1120" y2="840"/>
+    <line x1="1240" y1="838" x2="1820" y2="838"/>
+    <line x1="300" y1="870" x2="880" y2="870"/>
+    <line x1="1040" y1="868" x2="1620" y2="868"/>
+    <line x1="180" y1="910" x2="740" y2="910"/>
+    <line x1="880" y1="915" x2="1460" y2="915"/>
+    <line x1="420" y1="960" x2="1100" y2="960"/>
+    <line x1="1240" y1="965" x2="1780" y2="965"/>
+  </g>
+
+  <!-- Rising Evaporative Morning Mist over Lake -->
+  <rect y="740" width="1920" height="90" fill="url(#mistBand)" filter="url(#softMistBlur)" opacity="0.6"/>
+
+  <!-- 9. Delicate Foreground Bamboo & Eucalyptus Leaves (Corners) -->
+  <!-- Top Left Soft Eucalyptus Branch Silhouette -->
+  <g stroke="#3A5246" stroke-width="2" fill="#4E6C5C" opacity="0.45">
+    <path d="M -20 -10 Q 80 40 180 80 Q 260 120 340 140" fill="none"/>
+    <!-- Leaves -->
+    <path d="M 80 40 C 100 20, 140 30, 150 45 C 130 55, 95 55, 80 40 Z"/>
+    <path d="M 130 60 C 155 45, 195 55, 205 75 C 180 85, 145 80, 130 60 Z"/>
+    <path d="M 190 85 C 220 70, 260 85, 270 105 C 240 115, 205 105, 190 85 Z"/>
+    <path d="M 270 125 C 300 110, 340 125, 350 145 C 320 155, 285 145, 270 125 Z"/>
+  </g>
+
+  <!-- Top Right Soft Eucalyptus Branch Silhouette -->
+  <g stroke="#3A5246" stroke-width="2" fill="#4E6C5C" opacity="0.45">
+    <path d="M 1940 -10 Q 1840 40 1740 80 Q 1660 120 1580 140" fill="none"/>
+    <!-- Leaves -->
+    <path d="M 1840 40 C 1820 20, 1780 30, 1770 45 C 1790 55, 1825 55, 1840 40 Z"/>
+    <path d="M 1790 60 C 1765 45, 1725 55, 1715 75 C 1740 85, 1775 80, 1790 60 Z"/>
+    <path d="M 1730 85 C 1700 70, 1660 85, 1650 105 C 1680 115, 1715 105, 1730 85 Z"/>
+    <path d="M 1650 125 C 1620 110, 1580 125, 1570 145 C 1600 155, 1635 145, 1650 125 Z"/>
+  </g>
+</svg>
