@@ -1,0 +1,454 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --canvas-bg: #F0F2EB;
+    --canvas-mist: #E5EFE9;
+    --sage-green: #A9C9BB;
+    --sage-primary: #538A78;
+    --sage-deep: #3B6B5C;
+    --misty-blue: #B9DCE1;
+    --soft-mint: #D9E9DF;
+    --warm-white: #F0F2EB;
+    --charcoal: #2E3A37;
+    --forest-slate: #23322E;
+  }
+
+  body {
+    background-color: #F0F2EB;
+    color: #23322E;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Soothing Glass Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(240, 242, 235, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(169, 201, 187, 0.55);
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(83, 138, 120, 0.7);
+}
+
+/* Positioning lives in the components layer so Tailwind utilities (fixed / absolute / sticky)
+   can override it. Unlayered `position: relative` used to beat them and broke popovers,
+   toasts and the floating chat window. */
+@layer components {
+  .liquid-glass,
+  .liquid-glass-card,
+  .liquid-glass-hero {
+    position: relative;
+  }
+}
+
+/* 
+  OFFICIAL SAGE & MISTY-BLUE TRANSLUCENT LIQUID GLASSMORPISM
+  Soft frosted glass effect in warm whites, misty-blue, and soft mint
+  with curved edges, blur backdrops, specular rims, and delicate shadow depth.
+*/
+.liquid-glass {
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.65);
+  border-radius: 28px;
+  color: #23322E;
+  box-shadow: 
+    0 20px 48px -12px rgba(20, 83, 45, 0.1),
+    0 0 20px rgba(34, 197, 94, 0.08),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 2px 0 rgba(217, 233, 223, 0.4);
+}
+
+.liquid-glass-card {
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.7);
+  border-radius: 28px;
+  color: #23322E;
+  box-shadow: 
+    0 24px 52px -12px rgba(20, 83, 45, 0.12),
+    0 0 24px rgba(34, 197, 94, 0.1),
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -1px 2px 0 rgba(217, 233, 223, 0.45);
+}
+
+.liquid-glass-card::before,
+.liquid-glass-hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.35) 0%, rgba(16, 185, 129, 0.22) 45%, rgba(163, 230, 53, 0.12) 70%, transparent 100%);
+  opacity: 0.42;
+  filter: blur(28px);
+  animation: green-blob-bounce 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.liquid-glass-card > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]),
+.liquid-glass-hero > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]),
+.uiverse-green-card > *:not(.pointer-events-none):not(.absolute):not([class*="absolute"]):not(.uiverse-blob-green) {
+  position: relative;
+  z-index: 1;
+}
+
+.liquid-glass-hero {
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.64);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 2px solid rgba(169, 201, 187, 0.85);
+  border-radius: 32px;
+  color: #23322E;
+  box-shadow: 
+    0 32px 64px -16px rgba(20, 83, 45, 0.14),
+    0 0 35px rgba(34, 197, 94, 0.18),
+    inset 0 2px 3px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 3px 0 rgba(217, 233, 223, 0.5);
+}
+
+.liquid-glass-interactive {
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1.5px solid rgba(169, 201, 187, 0.55);
+  border-radius: 24px;
+  color: #23322E;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.liquid-glass-interactive:hover {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(34, 197, 94, 0.75);
+  box-shadow: 
+    0 16px 36px -6px rgba(20, 83, 45, 0.14),
+    0 0 24px rgba(34, 197, 94, 0.35);
+  transform: translateY(-2px);
+}
+
+.liquid-glass-glow {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  border-radius: 28px;
+  color: #2C3E50;
+  box-shadow: 
+    0 20px 48px -10px rgba(44, 62, 80, 0.14),
+    0 0 32px rgba(169, 223, 191, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 1);
+}
+
+.liquid-nav-bar {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 24px -4px rgba(44, 62, 80, 0.08);
+}
+
+/* Glass panel compatibility mappings */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 26px;
+  color: #2C3E50;
+  box-shadow: 
+    0 20px 48px -12px rgba(44, 62, 80, 0.12),
+    0 4px 16px -2px rgba(44, 62, 80, 0.05),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.98);
+}
+
+.glass-panel-glow {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 0.98);
+  border-radius: 28px;
+  color: #2C3E50;
+  box-shadow: 
+    0 24px 50px -10px rgba(44, 62, 80, 0.14),
+    0 0 32px rgba(169, 223, 191, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 1);
+}
+
+.glass-panel-interactive {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  color: #2C3E50;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-interactive:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 16px 36px -6px rgba(44, 62, 80, 0.15),
+    0 0 20px rgba(169, 223, 191, 0.4);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.92);
+  color: #2C3E50;
+  border-radius: 16px;
+  box-shadow: inset 0 2px 4px rgba(44, 62, 80, 0.03);
+  transition: all 0.2s ease;
+}
+.glass-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.98);
+  border-color: #52BE80;
+  box-shadow: 0 0 0 3px rgba(82, 190, 128, 0.25);
+}
+
+/* Button variants matching the blueprint mockup */
+.liquid-button-sage,
+.liquid-button-primary,
+.glass-button-primary {
+  background: linear-gradient(135deg, #538A78 0%, #3B6B5C 100%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 
+    0 8px 20px -4px rgba(46, 58, 55, 0.25),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.7);
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.liquid-button-sage:hover,
+.liquid-button-primary:hover,
+.glass-button-primary:hover {
+  background: linear-gradient(135deg, #649E8B 0%, #467C6C 100%);
+  box-shadow: 
+    0 12px 24px -4px rgba(46, 58, 55, 0.32),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-1.5px);
+}
+.liquid-button-sage:active,
+.liquid-button-primary:active,
+.glass-button-primary:active {
+  transform: scale(0.97) translateY(1px);
+}
+
+.liquid-button-clear,
+.liquid-button-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 6px 18px -3px rgba(44, 62, 80, 0.08),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.95);
+  color: #2C3E50;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.liquid-button-clear:hover,
+.liquid-button-glass:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #FFFFFF;
+  color: #1E293B;
+  box-shadow: 0 8px 22px -3px rgba(44, 62, 80, 0.12);
+  transform: translateY(-1.5px);
+}
+.liquid-button-clear:active,
+.liquid-button-glass:active {
+  transform: scale(0.97) translateY(1px);
+}
+
+.liquid-input {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.92);
+  color: #2C3E50;
+  border-radius: 16px;
+  box-shadow: inset 0 2px 4px rgba(44, 62, 80, 0.03);
+  transition: all 0.2s ease;
+}
+.liquid-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.98);
+  border-color: #52BE80;
+  box-shadow: 0 0 0 3px rgba(82, 190, 128, 0.25), 0 4px 14px rgba(44, 62, 80, 0.06);
+}
+.liquid-input option {
+  background-color: #FFFFFF;
+  color: #2C3E50;
+}
+
+/* Atmospheric animations */
+@keyframes softFogDrift {
+  0% { transform: translateX(0); opacity: 0.45; }
+  50% { transform: translateX(35px); opacity: 0.7; }
+  100% { transform: translateX(0); opacity: 0.45; }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+.animate-fog-drift {
+  animation: softFogDrift 20s ease-in-out infinite;
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.text-glow {
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================== */
+/* UIVERSE.IO CARD DESIGN (dylanharriscameron) - GREEN EDITION     */
+/* ============================================================== */
+.uiverse-green-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1.5px solid rgba(169, 201, 187, 0.75);
+  box-shadow: 
+    0 24px 50px -12px rgba(20, 83, 45, 0.14),
+    0 0 24px rgba(34, 197, 94, 0.12),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.uiverse-green-card:hover {
+  border-color: rgba(34, 197, 94, 0.85);
+  box-shadow: 
+    0 28px 60px -10px rgba(20, 83, 45, 0.2),
+    0 0 32px rgba(34, 197, 94, 0.25),
+    inset 0 2px 3px rgba(255, 255, 255, 1);
+}
+
+/* Moving Green Blob behind the card glass */
+.uiverse-blob-green {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.38) 0%, rgba(16, 185, 129, 0.25) 45%, rgba(163, 230, 53, 0.15) 70%, transparent 100%);
+  opacity: 0.45;
+  filter: blur(26px);
+  animation: green-blob-bounce 7s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes green-blob-bounce {
+  0% {
+    transform: translate(-100%, -100%) translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate(-100%, -100%) translate3d(85px, -20px, 0);
+  }
+  50% {
+    transform: translate(-100%, -100%) translate3d(85px, 85px, 0);
+  }
+  75% {
+    transform: translate(-100%, -100%) translate3d(-20px, 85px, 0);
+  }
+  100% {
+    transform: translate(-100%, -100%) translate3d(0, 0, 0);
+  }
+}
+
+/* ============================================================== */
+/* UIVERSE.IO HARMONIZED GREEN WAVE BUTTON (dexter-st adapted)    */
+/* Balanced, luminous emerald & sage wave — zero dark patches     */
+/* ============================================================== */
+.btn-dexter-green {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #0E5E35;
+  border: 1.5px solid rgba(220, 252, 231, 0.9);
+  border-radius: 9999px;
+  box-shadow: 
+    0 8px 24px -4px rgba(14, 94, 53, 0.35),
+    0 0 16px rgba(34, 197, 94, 0.4),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-dexter-green:hover {
+  transform: scale(1.03) translateY(-1px);
+  border-color: #FFFFFF;
+  box-shadow: 
+    0 12px 28px -4px rgba(14, 94, 53, 0.45),
+    0 0 24px rgba(34, 197, 94, 0.65),
+    inset 0 2px 3px rgba(255, 255, 255, 0.95);
+}
+
+.btn-dexter-green:active {
+  transform: scale(0.97) translateY(1px);
+  box-shadow: 
+    0 4px 12px -2px rgba(14, 94, 53, 0.4),
+    0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.btn-rotating-green-layer {
+  animation: rotateGreen 8s linear infinite;
+}
+
+@keyframes rotateGreen {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn-glass-light-beam {
+  animation: pulseGlassLight 3.2s ease-in-out infinite;
+}
+
+@keyframes pulseGlassLight {
+  0%, 100% { opacity: 0.95; transform: scaleY(1); }
+  50% { opacity: 0.3; transform: scaleY(0.85); }
+}
+
+.text-shadow-green {
+  text-shadow: 0 1px 2px rgba(5, 46, 22, 0.95), 0 0 10px rgba(34, 197, 94, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-rotating-green-layer,
+  .btn-glass-light-beam,
+  .uiverse-blob-green {
+    animation: none !important;
+  }
+}
