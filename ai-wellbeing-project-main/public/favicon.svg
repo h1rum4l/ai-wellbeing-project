@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="favTopGrad" x1="25%" y1="10%" x2="85%" y2="50%">
+      <stop offset="0%" stopColor="#A7F3D0" />
+      <stop offset="35%" stopColor="#5EEAD4" />
+      <stop offset="75%" stopColor="#2DD4BF" />
+      <stop offset="100%" stopColor="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="favCenterGrad" x1="20%" y1="30%" x2="70%" y2="75%">
+      <stop offset="0%" stopColor="#67E8F9" />
+      <stop offset="50%" stopColor="#22D3EE" />
+      <stop offset="100%" stopColor="#0284C7" />
+    </linearGradient>
+    <linearGradient id="favBottomGrad" x1="20%" y1="60%" x2="85%" y2="95%">
+      <stop offset="0%" stopColor="#22D3EE" />
+      <stop offset="40%" stopColor="#0284C7" />
+      <stop offset="85%" stopColor="#1E40AF" />
+      <stop offset="100%" stopColor="#0F172A" />
+    </linearGradient>
+    <filter id="favGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="50" cy="50" r="40" fill="rgba(6, 182, 212, 0.25)" filter="url(#favGlow)" />
+
+  <!-- Orbit Filaments -->
+  <path d="M 28 26 C 26 15, 62 10, 80 28" stroke="rgba(34, 211, 238, 0.55)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="40 2" />
+  <path d="M 72 74 C 74 85, 38 90, 20 72" stroke="rgba(34, 211, 238, 0.5)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="40 2" />
+  <path d="M 18 42 C 16 30, 22 22, 32 18" stroke="rgba(94, 234, 212, 0.5)" stroke-width="1.5" stroke-linecap="round" />
+
+  <!-- Bottom Wave -->
+  <path d="M 52 50 C 66 52, 82 62, 78 76 C 74 88, 56 90, 40 85 C 28 81, 16 71, 14 62 C 18 64, 26 66, 34 64 C 44 62, 50 56, 52 50 Z" fill="url(#favBottomGrad)" opacity="0.95" />
+
+  <!-- Top Wave -->
+  <path d="M 82 30 C 76 34, 66 38, 55 38 C 42 38, 30 33, 27 25 C 26 21, 30 16, 42 16 C 58 16, 75 22, 82 30 Z" fill="url(#favTopGrad)" opacity="0.9" />
+
+  <!-- Center 3D Ribbon Loop -->
+  <path d="M 82 30 C 65 38, 48 35, 38 42 C 26 50, 28 65, 36 72 C 45 80, 64 82, 72 74 C 80 66, 76 56, 62 52 C 50 48, 42 45, 42 38 C 42 32, 48 26, 60 26 C 70 26, 78 28, 82 30 Z" fill="url(#favCenterGrad)" />
+
+  <!-- Top Leaf Tip -->
+  <path d="M 72 26 C 78 27, 86 28, 90 28 C 86 33, 79 36, 72 37 C 76 32, 76 28, 72 26 Z" fill="#A7F3D0" />
+
+  <!-- Highlights -->
+  <path d="M 44 20 C 56 19, 70 24, 78 29" stroke="rgba(255, 255, 255, 0.85)" stroke-width="1.8" stroke-linecap="round" />
+  <path d="M 33 46 C 29 54, 30 64, 36 70" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 52 50 C 64 54, 72 61, 71 70" stroke="rgba(103, 232, 249, 0.7)" stroke-width="1.3" stroke-linecap="round" />
+
+  <!-- Glowing Constellation Nodes -->
+  <circle cx="28" cy="18" r="3.5" fill="#5EEAD4" filter="url(#favGlow)" />
+  <circle cx="28" cy="18" r="1.8" fill="#FFFFFF" />
+
+  <circle cx="80" cy="28" r="3.5" fill="#67E8F9" filter="url(#favGlow)" />
+  <circle cx="80" cy="28" r="1.8" fill="#FFFFFF" />
+
+  <circle cx="20" cy="42" r="3.8" fill="#22D3EE" filter="url(#favGlow)" />
+  <circle cx="20" cy="42" r="2" fill="#FFFFFF" />
+
+  <circle cx="48" cy="42" r="3.8" fill="#38BDF8" filter="url(#favGlow)" />
+  <circle cx="48" cy="42" r="2" fill="#FFFFFF" />
+
+  <circle cx="50" cy="58" r="3.2" fill="#06B6D4" filter="url(#favGlow)" />
+  <circle cx="50" cy="58" r="1.6" fill="#FFFFFF" />
+
+  <circle cx="72" cy="74" r="3.2" fill="#38BDF8" filter="url(#favGlow)" />
+  <circle cx="72" cy="74" r="1.6" fill="#FFFFFF" />
+
+  <circle cx="20" cy="72" r="3.5" fill="#22D3EE" filter="url(#favGlow)" />
+  <circle cx="20" cy="72" r="1.8" fill="#FFFFFF" />
+</svg>
