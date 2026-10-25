@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { db, seedDemoData } from './db.js';
+import { chatHandler } from './gemini.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.API_PORT || process.env.PORT || 8787);
@@ -74,6 +75,7 @@ const authLimiter = rateLimit({
 
 /* ---------- health ---------- */
 app.get('/api/health', (_req, res) => res.json({ ok: true, time: nowIso() }));
+app.post('/api/chat', rateLimit({ windowMs: 60000, limit: 15, standardHeaders: true, legacyHeaders: false }), chatHandler);
 
 /* ---------- auth ---------- */
 app.post('/api/auth/register', authLimiter, (req, res) => {

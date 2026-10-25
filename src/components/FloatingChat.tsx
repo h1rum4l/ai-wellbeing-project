@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Trash2, Bot, Sparkles, ChevronDown } from 'lucide-react';
-import { getDemoReply } from '../chat/assistant';
+import { getAIReply } from '../chat/assistant';
 import { detectCrisis, crisisMessage } from '../chat/safety';
 import { ChatMessage } from '../types';
 import { StressinaLogo } from './common/StressinaLogo';
@@ -34,6 +34,8 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const pendingRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts = ['Help me relax', 'Exam stress', "I can't sleep", 'Breathing exercise'];
@@ -46,11 +48,13 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
     if (isChatOpen) {
       scrollToBottom();
     }
-  }, [messages, isChatOpen]);
+  }, [messages, isChatOpen, isTyping]);
 
-  const handleSend = (textToSend?: string) => {
+  const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
-    if (!text) return;
+    if (!text || pendingRef.current) return;
+    pendingRef.current = true;
+    setIsTyping(true);
 
     triggerHaptic('light');
     const userMsg: ChatMessage = { role: 'user', content: text };
@@ -58,7 +62,7 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
     setMessages(nextHistory);
     if (!textToSend) setInput('');
 
-    setTimeout(() => {
+    try {
       let reply: string;
       if (detectCrisis(text)) {
         triggerHaptic('warning');
@@ -72,11 +76,14 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
         }
       } else {
         triggerHaptic('selection');
-        reply = getDemoReply(nextHistory, null);
+        reply = await getAIReply(nextHistory, null);
       }
 
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
-    }, 300);
+    } finally {
+      pendingRef.current = false;
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -158,6 +165,7 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
                 key={i}
                 type="button"
                 onClick={() => handleSend(q)}
+                disabled={isTyping}
                 className="text-[11px] font-medium bg-white/80 border border-slate-200 text-slate-700 hover:text-slate-900 px-2.5 py-1 rounded-lg transition-colors cursor-pointer shadow-xs"
               >
                 {q}
@@ -197,11 +205,13 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
                 </div>
               ))
             )}
+            {isTyping && <p role="status" className="text-emerald-800 text-xs">Companion is reflecting...</p>}
             <div ref={messagesEndRef} />
           </div>
 
           {/* Input & Footer */}
           <div className="p-3 bg-white/90 border-t border-slate-100 space-y-2">
+            <p className="text-[10px] text-slate-500">Messages are sent to Google Gemini. Google may use free-tier chats to improve its products. Avoid sensitive personal information.</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -218,7 +228,7 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
               />
               <button
                 type="submit"
-                disabled={!input.trim()}
+                disabled={!input.trim() || isTyping}
                 className="liquid-button-primary p-2.5 rounded-xl text-white disabled:opacity-40 cursor-pointer shadow-xs shrink-0"
               >
                 <Send className="w-4 h-4" />
@@ -230,7 +240,8 @@ export const FloatingChat: React.FC<FloatingChatProps> = ({
               {messages.length > 0 && (
                 <button
                   type="button"
-                  onClick={() => setMessages([])}
+                  onClick={() => { if (!pendingRef.current) setMessages([]); }}
+                  disabled={isTyping}
                   className="text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer font-medium"
                 >
                   <Trash2 className="w-3 h-3" />

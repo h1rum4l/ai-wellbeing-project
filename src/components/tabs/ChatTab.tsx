@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, PlusCircle, Bookmark, Bot, User, Sparkles, Lock } from 'lucide-react';
-import { GREETING, QUICK_PROMPTS, getDemoReply, ChatAssessmentContext } from '../../chat/assistant';
+import { GREETING, QUICK_PROMPTS, getAIReply, ChatAssessmentContext } from '../../chat/assistant';
 import { detectCrisis, crisisMessage } from '../../chat/safety';
 import { ChatMessage, UserAccount } from '../../types';
 import { store } from '../../storage/store';
@@ -27,6 +27,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const pendingRef = useRef(false);
 
   // Auto scroll to bottom
   const scrollToBottom = () => {
@@ -47,9 +48,10 @@ export const ChatTab: React.FC<ChatTabProps> = ({
     }
   }, [initialTopic]);
 
-  const handleSendMessage = (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
-    if (!text) return;
+    if (!text || pendingRef.current) return;
+    pendingRef.current = true;
 
     triggerHaptic('light');
     const userMessage: ChatMessage = {
@@ -64,7 +66,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
     setIsTyping(true);
 
     // Crisis detection check
-    setTimeout(() => {
+    try {
       let reply: string;
       if (detectCrisis(text)) {
         triggerHaptic('warning');
@@ -72,7 +74,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
       } else {
         triggerHaptic('selection');
         const ctx = shareContext ? assessmentContext : null;
-        reply = getDemoReply(newHistory, ctx);
+        reply = await getAIReply(newHistory, ctx);
       }
 
       setMessages((prev) => [
@@ -83,11 +85,14 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           created_at: new Date().toISOString(),
         },
       ]);
+    } finally {
+      pendingRef.current = false;
       setIsTyping(false);
-    }, 450);
+    }
   };
 
   const startNewChat = () => {
+    if (pendingRef.current) return;
     triggerHaptic('medium');
     setMessages([]);
     setSaveSuccessMsg('');
@@ -126,13 +131,14 @@ export const ChatTab: React.FC<ChatTabProps> = ({
               Wellbeing Companion
             </span>
             <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
-              Private & Confidential
+              Powered by Google Gemini
             </span>
           </div>
           <h3 className="text-base font-bold text-slate-900 tracking-tight">Talk Through Your Day</h3>
           <p className="text-xs text-slate-600">
             A reflective space to decompress, explore breathing methods, and untangle high workloads.
           </p>
+          <p className="text-xs text-slate-600 mt-1">Messages are sent to Google Gemini. Google may use free-tier chats to improve its products. Avoid sharing sensitive personal information.</p>
         </div>
 
         <div className="flex items-center gap-2 self-stretch sm:self-auto">
@@ -149,7 +155,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
           <button
             type="button"
             onClick={startNewChat}
-            disabled={messages.length === 0}
+            disabled={messages.length === 0 || isTyping}
             className={`text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
               messages.length === 0
                 ? 'opacity-40 bg-white/50 text-slate-400 border-slate-200 cursor-not-allowed'
@@ -177,7 +183,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
             onChange={(e) => setShareContext(e.target.checked)}
             className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
           />
-          <span>Personalize companion advice using my latest fuzzy stress assessment</span>
+          <span>Share my latest fuzzy stress assessment with Google Gemini to personalize advice</span>
         </label>
         {assessmentContext && shareContext && (
           <span className="text-[11px] font-mono font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded-lg border border-emerald-300">
@@ -278,7 +284,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
         <button
           type="button"
           onClick={() => handleSendMessage()}
-          disabled={!input.trim()}
+          disabled={!input.trim() || isTyping}
           className="liquid-button-sage p-2.5 rounded-xl text-white disabled:opacity-40 cursor-pointer shadow-xs"
         >
           <Send className="w-4 h-4" />

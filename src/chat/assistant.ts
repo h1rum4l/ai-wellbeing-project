@@ -76,6 +76,29 @@ export interface ChatAssessmentContext {
   action?: string;
 }
 
+export async function getAIReply(
+  history: ChatMessage[],
+  context?: ChatAssessmentContext | null
+): Promise<string> {
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: history.slice(-20).map(({ role, content }) => ({ role, content })),
+        context: context ?? null,
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!response.ok) throw new Error('Chat request failed');
+    const data = await response.json();
+    if (typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('Empty chat reply');
+    return data.reply;
+  } catch {
+    return 'I couldn’t connect to the AI companion right now. Please try again in a moment.';
+  }
+}
+
 export function getDemoReply(
   history: ChatMessage[],
   context?: ChatAssessmentContext | null
