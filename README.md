@@ -171,7 +171,7 @@ Input Values (HRV, Screen Time, Sleep)
 </td>
 <td width="50%">
 
-### 📊 History & Analytics
+### 📊 History  & Analytics
 - Account-scoped assessment history
 - Interactive stress trend visualizations
 - Chat conversation review
